@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../twitter4j-4.0.7/lib" />
+      <root url="jar://$PROJECT_DIR$/../gson-2.8.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../twitter4j-4.0.7/lib" recursive="false" />
+  </library>
+</component>
