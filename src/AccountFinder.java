@@ -2,7 +2,7 @@ import com.google.gson.JsonObject;
 import twitter4j.*;
 import java.util.*;
 
-public class Twitter {
+public class AccountFinder {
     public static void main(String[] args) {
         twitter4j.Twitter twitter = new TwitterFactory().getInstance();
         JsonObject output = new JsonObject();
