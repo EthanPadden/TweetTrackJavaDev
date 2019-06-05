@@ -1,6 +1,9 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import twitter4j.*;
+import twitter4j.json.DataObjectFactory;
+
 import java.util.*;
 
 public class Main {
@@ -87,7 +90,18 @@ public class Main {
                 JsonObject output = new JsonObject();
 
                 JsonArray statusArray = new JsonArray();
-                for (Status status : statuses) statusArray.add(status.toString());
+
+                for (Status status : statuses) {
+                    JsonObject statusJson = new JsonObject();
+                    statusJson.addProperty("id", status.getId());
+                    statusJson.addProperty("text", status.getText());
+                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
+                    statusJson.addProperty("favourite_count", status.getFavoriteCount());
+                    statusJson.addProperty("rt_count", status.getRetweetCount());
+                    statusJson.addProperty("is_rt", status.isRetweet());
+
+                    statusArray.add(statusJson);
+                }
                 output.add("tweetStream", statusArray);
 
                 return output.toString();
