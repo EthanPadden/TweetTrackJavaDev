@@ -1,3 +1,4 @@
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import twitter4j.*;
 import java.util.*;
@@ -6,6 +7,7 @@ public class Main {
     /**
      * args[0] => The command for the data required
      * args[1] => The Twitter handle
+     * args[2] => The number of tweets required
      * **/
 
     private static final String[] commands = {
@@ -14,17 +16,33 @@ public class Main {
 
     public static void main(String[] args) {
         if(args[0].equals(commands[0])) {
-            String output = getBasicInfo(args[1]);
-            if(output == null) {
-                System.out.println("Failed to get information for this handle");
+            try {
+                String output = getBasicInfo(args[1]);
+                if (output == null) {
+                    System.out.println("Failed to get information for this handle");
+                    System.exit(-1);
+                } else {
+                    System.out.println(output);
+                    System.exit(0);
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("A Twitter handle must be inputted");
                 System.exit(-1);
-            } else {
-                System.out.println(output);
-                System.exit(0);
             }
         } else if (args[0].equals(commands[1])) {
-            // Get tweet analytics
-            System.exit(0);
+            try {
+                String output = getTweets(args[1], args[2]);
+                if (output == null) {
+                    System.out.println("Failed to get information for this handle");
+                    System.exit(-1);
+                } else {
+                    System.out.println(output);
+                    System.exit(0);
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Input must be of the form: command handle numberOfTweets");
+                System.exit(-1);
+            }
         } else {
             System.out.println("Please enter a valid command");
             System.out.println("Commands must be in the form: command handle");
@@ -32,8 +50,6 @@ public class Main {
             for(String command : commands) System.out.println(command);
             System.exit(-1);
         }
-       //
-//                        System.exit(-1);
     }
 
     static private String getBasicInfo(String handle) {
@@ -51,6 +67,22 @@ public class Main {
             return output.toString();
         } else {
             return null;
+        }
+    }
+
+    static private String getTweets(String handle, String numTweets) {
+        TweetStream tweetStream = new TweetStream(handle);
+        int tweetCount = Integer.parseInt(numTweets);
+        List<Status> statuses = tweetStream.getTweets(tweetCount);
+        if(statuses == null) return null;
+        else {
+            JsonObject output = new JsonObject();
+
+            JsonArray statusArray = new JsonArray();
+            for(Status status : statuses) statusArray.add(status.toString());
+            output.add("tweetStream", statusArray);
+
+            return output.toString();
         }
     }
 }
