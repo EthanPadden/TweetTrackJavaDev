@@ -15,39 +15,44 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        if(args[0].equals(commands[0])) {
-            try {
-                String output = getBasicInfo(args[1]);
-                if (output == null) {
-                    System.out.println("Failed to get information for this handle");
+        try {
+            if (args[0].equals(commands[0])) {
+                try {
+                    String output = getBasicInfo(args[1]);
+                    if (output == null) {
+                        System.out.println("Failed to get information for this handle");
+                        System.exit(-1);
+                    } else {
+                        System.out.println(output);
+                        System.exit(0);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("A Twitter handle must be inputted");
                     System.exit(-1);
-                } else {
-                    System.out.println(output);
-                    System.exit(0);
                 }
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("A Twitter handle must be inputted");
+            } else if (args[0].equals(commands[1])) {
+                try {
+                    String output = getTweets(args[1], args[2]);
+                    if (output == null) {
+                        System.out.println("Failed to get information for this handle");
+                        System.exit(-1);
+                    } else {
+                        System.out.println(output);
+                        System.exit(0);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Input must be of the form: command handle numberOfTweets");
+                    System.exit(-1);
+                }
+            } else {
+                System.out.println("Please enter a valid command");
+                System.out.println("Commands must be in the form: command handle");
+                System.out.println("Possible commands:");
+                for (String command : commands) System.out.println(command);
                 System.exit(-1);
             }
-        } else if (args[0].equals(commands[1])) {
-            try {
-                String output = getTweets(args[1], args[2]);
-                if (output == null) {
-                    System.out.println("Failed to get information for this handle");
-                    System.exit(-1);
-                } else {
-                    System.out.println(output);
-                    System.exit(0);
-                }
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Input must be of the form: command handle numberOfTweets");
-                System.exit(-1);
-            }
-        } else {
-            System.out.println("Please enter a valid command");
-            System.out.println("Commands must be in the form: command handle");
-            System.out.println("Possible commands:");
-            for(String command : commands) System.out.println(command);
+        } catch(IndexOutOfBoundsException e) {
+            System.out.println("Enter input");
             System.exit(-1);
         }
     }
