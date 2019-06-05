@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TweetTrack:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TweetTrack_jar</output-path>
+    <root id="archive" name="TweetTrack.jar">
+      <element id="module-output" name="TweetTrack" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../gson-2.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../twitter4j-4.0.7/lib/twitter4j-core-4.0.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../twitter4j-4.0.7/lib/twitter4j-async-4.0.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../twitter4j-4.0.7/lib/twitter4j-stream-4.0.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../twitter4j-4.0.7/lib/twitter4j-examples-4.0.7.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
