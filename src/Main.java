@@ -76,18 +76,23 @@ public class Main {
     }
 
     static private String getTweets(String handle, String numTweets) {
-        TweetStream tweetStream = new TweetStream(handle);
-        int tweetCount = Integer.parseInt(numTweets);
-        List<Status> statuses = tweetStream.getTweets(tweetCount);
-        if(statuses == null) return null;
-        else {
-            JsonObject output = new JsonObject();
+        try {
+            TweetStream tweetStream = new TweetStream(handle);
+            int tweetCount = Integer.parseInt(numTweets);
+            List<Status> statuses = tweetStream.getTweets(tweetCount);
+            if (statuses == null) return null;
+            else {
+                JsonObject output = new JsonObject();
 
-            JsonArray statusArray = new JsonArray();
-            for(Status status : statuses) statusArray.add(status.toString());
-            output.add("tweetStream", statusArray);
+                JsonArray statusArray = new JsonArray();
+                for (Status status : statuses) statusArray.add(status.toString());
+                output.add("tweetStream", statusArray);
 
-            return output.toString();
+                return output.toString();
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("The number of tweets must be an integer");
+            return null;
         }
     }
 }
