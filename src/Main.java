@@ -13,7 +13,7 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        if(args[0] == commands[0]) {
+        if(args[0].equals(commands[0])) {
             String output = getBasicInfo(args[1]);
             if(output == null) {
                 System.out.println("Failed to get information for this handle");
@@ -22,13 +22,13 @@ public class Main {
                 System.out.println(output);
                 System.exit(0);
             }
-        } else if (args[0] == commands[1]) {
+        } else if (args[0].equals(commands[1])) {
             // Get tweet analytics
             System.exit(0);
         } else {
             System.out.println("Please enter a valid command");
             System.out.println("Commands must be in the form: command handle");
-            System.out.println("Possible commands");
+            System.out.println("Possible commands:");
             for(String command : commands) System.out.println(command);
             System.exit(-1);
         }
