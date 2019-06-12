@@ -21,12 +21,11 @@ public class Main {
         try {
             if (args[0].equals(commands[0])) {
                 try {
-                    String output = getBasicInfo(args[1]);
-                    if (output == null) {
+                    boolean success = getBasicInfo(args[1]);
+                    if (!success) {
                         System.out.println("Failed to get information for this handle");
                         System.exit(-1);
                     } else {
-                        System.out.println(output);
                         System.exit(0);
                     }
                 } catch (IndexOutOfBoundsException e) {
@@ -59,7 +58,7 @@ public class Main {
         }
     }
 
-    static private String getBasicInfo(String handle) {
+    static private boolean getBasicInfo(String handle) {
         Account account = new Account(handle);
         User user = account.verifyAccount();
 
@@ -71,9 +70,10 @@ public class Main {
             output.addProperty("tweetCount", user.getStatusesCount());
             output.addProperty("followersCount", user.getFollowersCount());
 
-            return output.toString();
+            System.out.println(output.toString());
+            return true;
         } else {
-            return null;
+            return false;
         }
     }
 
