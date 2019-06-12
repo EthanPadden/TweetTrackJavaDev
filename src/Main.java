@@ -17,8 +17,6 @@ public class Main {
         "overview", "tweetstats"
     };
 
-    private static String separator = "|||";
-
     public static void main(String[] args) {
         try {
             if (args[0].equals(commands[0])) {
@@ -28,7 +26,7 @@ public class Main {
                         System.out.println("Failed to get information for this handle");
                         System.exit(-1);
                     } else {
-                        System.out.println(separator + output);
+                        System.out.println(output);
                         System.exit(0);
                     }
                 } catch (IndexOutOfBoundsException e) {
@@ -42,7 +40,7 @@ public class Main {
                         System.out.println("Failed to get information for this handle");
                         System.exit(-1);
                     } else {
-                        System.out.println(separator + output);
+                        System.out.println(output);
                         System.exit(0);
                     }
                 } catch (IndexOutOfBoundsException e) {
