@@ -35,12 +35,11 @@ public class Main {
                 }
             } else if (args[0].equals(commands[1])) {
                 try {
-                    String output = getTweets(args[1], args[2]);
-                    if (output == null) {
+                    boolean success = getTweets(args[1], args[2]);
+                    if (!success) {
                         System.out.println("Failed to get information for this handle");
                         System.exit(-1);
                     } else {
-                        System.out.println(output);
                         System.exit(0);
                     }
                 } catch (IndexOutOfBoundsException e) {
@@ -78,16 +77,14 @@ public class Main {
         }
     }
 
-    static private String getTweets(String handle, String numTweets) {
+    static private boolean getTweets(String handle, String numTweets) {
         try {
             TweetStream tweetStream = new TweetStream(handle);
             int tweetCount = Integer.parseInt(numTweets);
             List<Status> statuses = tweetStream.getTweets(tweetCount);
-            if (statuses == null) return null;
+            if (statuses == null) return false;
             else {
                 JsonObject output = new JsonObject();
-
-                JsonArray statusArray = new JsonArray();
 
                 for (Status status : statuses) {
                     JsonObject statusJson = new JsonObject();
@@ -98,15 +95,14 @@ public class Main {
                     statusJson.addProperty("rt_count", status.getRetweetCount());
                     statusJson.addProperty("is_rt", status.isRetweet());
 
-                    statusArray.add(statusJson);
+                    System.out.println("Tweet: " + statusJson.toString());
                 }
-                output.add("tweetStream", statusArray);
 
-                return output.toString();
+                return true;
             }
         } catch (NumberFormatException e) {
             System.out.println("The number of tweets must be an integer");
-            return null;
+            return false;
         }
     }
 }
