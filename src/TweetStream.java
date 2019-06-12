@@ -19,10 +19,7 @@ public class TweetStream extends TwitterEntity{
     }
 
     public List<Status> getTweets(int numTweets) {
-        if(numTweets > 200){
-            System.out.println("Max number of tweets to ba analysed is 200");
-            return null;
-        } else if(user == null) return null;
+        if(user == null) return null;
         else {
             String handle = user.getScreenName();
             Paging paging = new Paging(1,numTweets);
