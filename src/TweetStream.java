@@ -33,5 +33,24 @@ public class TweetStream extends TwitterEntity{
             }
         }
     }
-}
+
+    public List<Status> getTweetsByTime(int numDays) {
+        /** NOT DEALT WITH MAX BUFFER PROBLEM YET - LIMIT TO 30 TWEETS **/
+        int maxTweets = 30;
+        
+        if(user == null) return null;
+        else {
+            String handle = user.getScreenName();
+            try {
+                List<Status> statuses = twitter.getUserTimeline(handle);
+
+
+                return statuses;
+            } catch (TwitterException te) {
+                te.printStackTrace();
+                System.out.println("Failed to get timeline: " + te.getMessage());
+                return null;
+            }
+        }
+    }}
 
