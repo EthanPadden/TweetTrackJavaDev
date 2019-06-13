@@ -8,9 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3e5fb08a-f9d4-4eb8-baec-97dcb7ca43b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/TweetTrack_jar/TweetTrack.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/TweetTrack_jar/TweetTrack.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TweetTrack/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TweetTrack/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TweetTrack/TweetStream.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TweetTrack/TweetStream.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TweetStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TweetStream.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,10 +34,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="42" column="43" selection-start-line="42" selection-start-column="43" selection-end-line="42" selection-end-column="43" />
+            <state relative-caret-position="141">
+              <caret line="54" column="40" lean-forward="true" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#getTweets#0;class#Main#0" />
               </folding>
             </state>
           </provider>
@@ -45,8 +47,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5117">
-              <caret line="335" column="7" selection-start-line="335" selection-start-column="7" selection-end-line="335" selection-end-column="7" />
+            <state relative-caret-position="5627">
+              <caret line="339" column="7" selection-start-line="339" selection-start-column="7" selection-end-line="339" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -63,11 +65,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TweetStream.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="17" selection-start-column="17" selection-end-column="17" />
+            <state relative-caret-position="328">
+              <caret line="62" column="72" selection-start-line="62" selection-start-column="72" selection-end-line="62" selection-end-column="72" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#177#178#0" expanded="true" />
                 <element signature="e#237#238#0" expanded="true" />
+                <element signature="e#1541#1549#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -76,12 +80,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://$PROJECT_DIR$/../twitter4j-4.0.7/lib/twitter4j-core-4.0.7.jar!/twitter4j/TwitterFactory.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
+            <state relative-caret-position="221">
               <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-              <folding>
-                <element signature="e#913#914#0" expanded="true" />
-                <element signature="e#969#970#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -89,7 +89,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://$PROJECT_DIR$/../twitter4j-4.0.7/lib/twitter4j-core-4.0.7.jar!/twitter4j/conf/ConfigurationContext.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
+            <state relative-caret-position="238">
               <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
             </state>
           </provider>
@@ -162,12 +162,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1560344886845" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1560444827610" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../gson-2.8.0.jar!/" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -190,7 +190,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="TweetTrack" />
-      <option name="PROGRAM_PARAMETERS" value="tweetstats realDonaldTrump 3" />
+      <option name="PROGRAM_PARAMETERS" value="tweetbytime realDonaldTrump 3" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -227,7 +227,7 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19676113" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -270,8 +270,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5117">
-          <caret line="335" column="7" selection-start-line="335" selection-start-column="7" selection-end-line="335" selection-end-column="7" />
+        <state relative-caret-position="5627">
+          <caret line="339" column="7" selection-start-line="339" selection-start-column="7" selection-end-line="339" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -319,21 +319,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TweetStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="17" selection-start-column="17" selection-end-column="17" />
+        <state relative-caret-position="328">
+          <caret line="62" column="72" selection-start-line="62" selection-start-column="72" selection-end-line="62" selection-end-column="72" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#177#178#0" expanded="true" />
             <element signature="e#237#238#0" expanded="true" />
+            <element signature="e#1541#1549#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="42" column="43" selection-start-line="42" selection-start-column="43" selection-end-line="42" selection-end-column="43" />
+        <state relative-caret-position="141">
+          <caret line="54" column="40" lean-forward="true" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#getTweets#0;class#Main#0" />
           </folding>
         </state>
       </provider>

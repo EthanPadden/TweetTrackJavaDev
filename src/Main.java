@@ -49,17 +49,16 @@ public class Main {
                 }
             } else if (args[0].equals(commands[2])) {
                 try {
-                    /** NOTE - max buffer problem remains unsolved - limit handle to
-                     * accounts that are not tweeting often
-                     * Limit number of days to 7
-                     */
-                    TweetStream t = new TweetStream("elonmusk");
-                    for(Status status : t.getTweetsByTime(0)){
-                        System.out.println(status);
+                    String output = getTweetsByTime(args[1], args[2]);
+                    if (output == null) {
+                        System.out.println("Failed to get information for this handle");
+                        System.exit(-1);
+                    } else {
+                        System.out.println(output);
+                        System.exit(0);
                     }
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Input must be of the form: command handle numberOfTweets");
-                    e.printStackTrace();
+                    System.out.println("Input must be of the form: command handle numberOfDays");
                     System.exit(-1);
                 }
             } else {

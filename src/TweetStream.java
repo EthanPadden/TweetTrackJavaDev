@@ -1,6 +1,8 @@
 import com.google.gson.JsonObject;
 import twitter4j.*;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TweetStream extends TwitterEntity{
@@ -35,22 +37,33 @@ public class TweetStream extends TwitterEntity{
     }
 
     public List<Status> getTweetsByTime(int numDays) {
-        /** NOT DEALT WITH MAX BUFFER PROBLEM YET - LIMIT TO 30 TWEETS **/
-        int maxTweets = 30;
-        
         if(user == null) return null;
         else {
             String handle = user.getScreenName();
+
+            // Note - more paging for more than 200 tweets
+            Paging paging = new Paging(1,200);
+
             try {
-                List<Status> statuses = twitter.getUserTimeline(handle);
+                List<Status> statuses = twitter.getUserTimeline(handle,paging);
+                if(statuses.size() <= 1) return null;
 
+                ArrayList<Status> output = new ArrayList<Status>();
+                Date date = new Date();
+                date.setDate(date.getDate()-numDays);
 
-                return statuses;
+                for(Status status : statuses) {
+                    if(status.getCreatedAt().compareTo(date) > 0) output.add(status);
+                    else break;
+                }
+
+                return output;
             } catch (TwitterException te) {
                 te.printStackTrace();
                 System.out.println("Failed to get timeline: " + te.getMessage());
                 return null;
             }
         }
-    }}
+    }
+}
 
