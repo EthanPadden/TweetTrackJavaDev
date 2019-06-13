@@ -14,7 +14,7 @@ public class Main {
      * **/
 
     private static final String[] commands = {
-        "overview", "tweetstats"
+        "overview", "tweetstats", "tweetbytime"
     };
 
     public static void main(String[] args) {
@@ -45,6 +45,21 @@ public class Main {
                     }
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("Input must be of the form: command handle numberOfTweets");
+                    System.exit(-1);
+                }
+            } else if (args[0].equals(commands[2])) {
+                try {
+                    /** NOTE - max buffer problem remains unsolved - limit handle to
+                     * accounts that are not tweeting often
+                     * Limit number of days to 7
+                     */
+                    TweetStream t = new TweetStream("elonmusk");
+                    for(Status status : t.getTweetsByTime(0)){
+                        System.out.println(status);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Input must be of the form: command handle numberOfTweets");
+                    e.printStackTrace();
                     System.exit(-1);
                 }
             } else {
@@ -87,6 +102,38 @@ public class Main {
             else {
                 JsonObject output = new JsonObject();
 
+                JsonArray statusArray = new JsonArray();
+
+                for (Status status : statuses) {
+                    JsonObject statusJson = new JsonObject();
+                    statusJson.addProperty("id", status.getId());
+                    statusJson.addProperty("text", status.getText());
+                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
+                    statusJson.addProperty("favourite_count", status.getFavoriteCount());
+                    statusJson.addProperty("rt_count", status.getRetweetCount());
+                    statusJson.addProperty("is_rt", status.isRetweet());
+
+                    statusArray.add(statusJson);
+                }
+                output.add("tweetStream", statusArray);
+
+                return output.toString();
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("The number of tweets must be an integer");
+            return null;
+        }
+    }
+
+    static private String getTweetsByTime(String handle, String numDays) {
+        try {
+            TweetStream tweetStream = new TweetStream(handle);
+            int daysCount = Integer.parseInt(numDays);
+            List<Status> statuses = tweetStream.getTweetsByTime(daysCount);
+
+            if (statuses == null) return null;
+            else {
+                JsonObject output = new JsonObject();
                 JsonArray statusArray = new JsonArray();
 
                 for (Status status : statuses) {
