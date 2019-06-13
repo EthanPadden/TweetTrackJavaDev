@@ -86,7 +86,9 @@ public class Main {
             else {
                 JsonObject output = new JsonObject();
 
+                int i = 0;
                 for (Status status : statuses) {
+
                     JsonObject statusJson = new JsonObject();
                     statusJson.addProperty("id", status.getId());
                     statusJson.addProperty("text", status.getText());
@@ -95,7 +97,8 @@ public class Main {
                     statusJson.addProperty("rt_count", status.getRetweetCount());
                     statusJson.addProperty("is_rt", status.isRetweet());
 
-                    System.out.println("Tweet: " + statusJson.toString());
+                    System.out.println("Tweet: "+i + statusJson.toString());
+                    i++;
                 }
 
                 return true;
