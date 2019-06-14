@@ -14,6 +14,7 @@ public class AsyncRouteComm {
     }
 
     public void asyncOutput(List<JsonObject> list) {
+        System.out.println("w");
         int signal = reader.nextInt();
 
         if(signal == 0) {
