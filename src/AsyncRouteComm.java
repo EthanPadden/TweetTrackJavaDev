@@ -6,20 +6,20 @@ import com.google.gson.JsonParser;
 
 public class AsyncRouteComm {
     private Scanner reader;
+    private int i;
 
     public AsyncRouteComm() {
         reader = new Scanner(System.in);
+        i = 0;
     }
 
     public void asyncOutput(List<JsonObject> list) {
         int signal = reader.nextInt();
-        int i = 0;
 
         if(signal == 0) {
-//            System.out.println(list.get(i));
-//            System.out.println("Tweet: " + i + statusJson.toString());
-
+            System.out.println("Tweet: " + list.get(i).toString());
             i++;
+            asyncOutput(list);
         }
     }
 
