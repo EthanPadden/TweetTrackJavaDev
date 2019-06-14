@@ -11,10 +11,10 @@ public class AsyncRouteComm {
     public AsyncRouteComm() {
         reader = new Scanner(System.in);
         i = 0;
+        System.out.println("w");
     }
 
     public void asyncOutput(List<JsonObject> list) {
-        System.out.println("w");
         int signal = reader.nextInt();
 
         if(signal == 0) {
