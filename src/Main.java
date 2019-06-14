@@ -45,6 +45,20 @@ public class Main {
                     System.out.println("Input must be of the form: command handle numberOfTweets");
                     System.exit(-1);
                 }
+            }else if (args[0].equals(commands[1])) {
+                try {
+                    String output = getTweets(args[1], args[2]);
+                    if (output == null) {
+                        System.out.println("Failed to get information for this handle");
+                        System.exit(-1);
+                    } else {
+                        // Use outputter
+                        System.exit(0);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Input must be of the form: command handle numberOfTweets");
+                    System.exit(-1);
+                }
             } else {
                 System.out.println("Please enter a valid command");
                 System.out.println("Commands must be in the form: command handle");
@@ -77,16 +91,16 @@ public class Main {
         }
     }
 
-    static private boolean getTweets(String handle, String numTweets) {
+    static private String getTweets(String handle, String numTweets) {
         try {
             TweetStream tweetStream = new TweetStream(handle);
             int tweetCount = Integer.parseInt(numTweets);
             List<Status> statuses = tweetStream.getTweets(tweetCount);
-            if (statuses == null) return false;
+            if (statuses == null) return null;
             else {
-                JsonObject output = new JsonObject();
+                JsonArray output = new JsonArray();
 
-                int i = 0;
+
                 for (Status status : statuses) {
 
                     JsonObject statusJson = new JsonObject();
@@ -97,15 +111,15 @@ public class Main {
                     statusJson.addProperty("rt_count", status.getRetweetCount());
                     statusJson.addProperty("is_rt", status.isRetweet());
 
-                    System.out.println("Tweet: "+i + statusJson.toString());
-                    i++;
+                    output.add(statusJson);
+
                 }
 
-                return true;
+                return output.toString();
             }
         } catch (NumberFormatException e) {
             System.out.println("The number of tweets must be an integer");
-            return false;
+            return null;
         }
     }
 }
