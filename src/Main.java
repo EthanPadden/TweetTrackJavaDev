@@ -41,8 +41,16 @@ public class Main {
                         System.out.println("Failed to get information for this handle");
                         System.exit(-1);
                     } else {
-                        AsyncRouteComm asyncRouteComm = new AsyncRouteComm();
-                        asyncRouteComm.asyncOutput(output);
+                        try {
+                            PrintWriter printWriter = new PrintWriter("statuslist.txt");
+                            for(JsonObject statusJson : output) {
+                                printWriter.println(statusJson.toString());
+                                printWriter.flush();
+                            }
+                        } catch (FileNotFoundException e) {
+                            System.out.println("File not found to store tweets");
+                        }
+
                         System.exit(0);
                     }
                 } catch (IndexOutOfBoundsException e) {
