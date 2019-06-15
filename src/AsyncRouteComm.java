@@ -11,7 +11,7 @@ public class AsyncRouteComm {
     public AsyncRouteComm() {
         reader = new Scanner(System.in);
         i = 0;
-        System.out.println("w");
+        System.out.println("WAITING_SIGNAL");
     }
 
     public void asyncOutput(List<JsonObject> list) {
