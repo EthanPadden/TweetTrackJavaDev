@@ -5,6 +5,8 @@ import twitter4j.*;
 import twitter4j.json.DataObjectFactory;
 
 import java.util.*;
+import java.io.*;
+
 
 public class Main {
     /**
@@ -55,8 +57,15 @@ else if (args[0].equals(commands[2])) {
                         System.out.println("Failed to get information for this handle");
                         System.exit(-1);
                     } else {
-                        AsyncRouteComm asyncRouteComm = new AsyncRouteComm();
-                        asyncRouteComm.asyncOutput(output);
+                        try {
+                            PrintWriter printWriter = new PrintWriter("statuslist.txt");
+                            for(JsonObject statusJson : output) {
+                                printWriter.println(statusJson.toString());
+                                printWriter.flush();
+                            }
+                        } catch (FileNotFoundException e) {
+                            System.out.println("File not found to store tweets");
+                        }
                         System.exit(0);
                     }
                 } catch (IndexOutOfBoundsException e) {
