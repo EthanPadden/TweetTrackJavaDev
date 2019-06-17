@@ -39,16 +39,20 @@ public class Main {
                     List<JsonObject> output = getTweets(args[1], args[2]);
                     if (output == null) {
                         System.out.println("Failed to get information for this handle");
-                        System.exit(-1);
+                        System.exit(1);
                     } else {
                         try {
-                            PrintWriter printWriter = new PrintWriter("statuslist.txt");
+                            PrintWriter printWriter = new PrintWriter(args[3]);
                             for(JsonObject statusJson : output) {
                                 printWriter.println(statusJson.toString());
                                 printWriter.flush();
                             }
+                            System.out.println("SUCCESS");
                         } catch (FileNotFoundException e) {
                             System.out.println("File not found to store tweets");
+                            System.out.println("FAILURE");
+
+                            System.exit(2);
                         }
 
                         System.exit(0);
@@ -58,7 +62,7 @@ public class Main {
                     System.exit(-1);
                 }
             }
-else if (args[0].equals(commands[2])) {
+                else if (args[0].equals(commands[2])) {
                 try {
                     List<JsonObject> output = getTweetsByTime(args[1], args[2]);
                     if (output == null) {
@@ -66,13 +70,18 @@ else if (args[0].equals(commands[2])) {
                         System.exit(-1);
                     } else {
                         try {
-                            PrintWriter printWriter = new PrintWriter("statuslist.txt");
+                            PrintWriter printWriter = new PrintWriter(args[3]);
                             for(JsonObject statusJson : output) {
                                 printWriter.println(statusJson.toString());
                                 printWriter.flush();
                             }
+                            System.out.flush();
+                            System.out.println("SUCCESS");
+                            System.exit(0);
+
                         } catch (FileNotFoundException e) {
                             System.out.println("File not found to store tweets");
+                            System.out.println("FAILURE");
                         }
                         System.exit(0);
                     }

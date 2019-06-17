@@ -51,11 +51,8 @@ public class TweetStream extends TwitterEntity{
                 ArrayList<Status> output = new ArrayList<Status>();
                 Date date = new Date();
                 date.setDate(date.getDate()-numDays);
-                System.out.println(date.toString());
 
                 for(Status status : statuses) {
-                    System.out.println(status.getCreatedAt());
-
                     if(status.getCreatedAt().compareTo(date) > 0){
                         output.add(status);
                     }
