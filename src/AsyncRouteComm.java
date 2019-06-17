@@ -11,13 +11,14 @@ public class AsyncRouteComm {
     public AsyncRouteComm() {
         reader = new Scanner(System.in);
         i = 0;
-        System.out.println("w");
     }
 
     public void asyncOutput(List<JsonObject> list) {
+        System.out.flush();
+        System.out.println("WAITING_SIGNAL");
         int signal = reader.nextInt();
 
-        if(signal == 0) {
+        if(signal == 0 && i < list.size()) {
             System.out.println("Tweet: " + list.get(i).toString());
             i++;
             asyncOutput(list);

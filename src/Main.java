@@ -5,6 +5,8 @@ import twitter4j.*;
 import twitter4j.json.DataObjectFactory;
 
 import java.util.*;
+import java.io.*;
+
 
 public class Main {
     /**
@@ -37,10 +39,50 @@ public class Main {
                     List<JsonObject> output = getTweets(args[1], args[2]);
                     if (output == null) {
                         System.out.println("Failed to get information for this handle");
+                        System.exit(1);
+                    } else {
+                        try {
+                            PrintWriter printWriter = new PrintWriter(args[3]);
+                            for(JsonObject statusJson : output) {
+                                printWriter.println(statusJson.toString());
+                                printWriter.flush();
+                            }
+                            System.out.println("SUCCESS");
+                        } catch (FileNotFoundException e) {
+                            System.out.println("File not found to store tweets");
+                            System.out.println("FAILURE");
+
+                            System.exit(2);
+                        }
+
+                        System.exit(0);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Input must be of the form: command handle numberOfTweets");
+                    System.exit(-1);
+                }
+            }
+                else if (args[0].equals(commands[2])) {
+                try {
+                    List<JsonObject> output = getTweetsByTime(args[1], args[2]);
+                    if (output == null) {
+                        System.out.println("Failed to get information for this handle");
                         System.exit(-1);
                     } else {
-                        AsyncRouteComm asyncRouteComm = new AsyncRouteComm();
-                        asyncRouteComm.asyncOutput(output);
+                        try {
+                            PrintWriter printWriter = new PrintWriter(args[3]);
+                            for(JsonObject statusJson : output) {
+                                printWriter.println(statusJson.toString());
+                                printWriter.flush();
+                            }
+                            System.out.flush();
+                            System.out.println("SUCCESS");
+                            System.exit(0);
+
+                        } catch (FileNotFoundException e) {
+                            System.out.println("File not found to store tweets");
+                            System.out.println("FAILURE");
+                        }
                         System.exit(0);
                     }
                 } catch (IndexOutOfBoundsException e) {
@@ -111,7 +153,7 @@ public class Main {
         }
     }
 
-    static private String getTweetsByTime(String handle, String numDays) {
+    static private List<JsonObject> getTweetsByTime(String handle, String numDays) {
         try {
             TweetStream tweetStream = new TweetStream(handle);
             int daysCount = Integer.parseInt(numDays);
@@ -119,8 +161,8 @@ public class Main {
 
             if (statuses == null) return null;
             else {
-                JsonObject output = new JsonObject();
-                JsonArray statusArray = new JsonArray();
+                ArrayList<JsonObject> output = new ArrayList<JsonObject>();
+
 
                 for (Status status : statuses) {
                     JsonObject statusJson = new JsonObject();
@@ -131,11 +173,10 @@ public class Main {
                     statusJson.addProperty("rt_count", status.getRetweetCount());
                     statusJson.addProperty("is_rt", status.isRetweet());
 
-                    statusArray.add(statusJson);
+                    output.add(statusJson);
                 }
-                output.add("tweetStream", statusArray);
 
-                return output.toString();
+                return output;
             }
         } catch (NumberFormatException e) {
             System.out.println("The number of tweets must be an integer");
