@@ -16,7 +16,7 @@ public class Main {
      * **/
 
     private static final String[] commands = {
-        "overview", "tweetstats", "tweetbytime"
+        "overview", "tweetstats", "tweetbytime", "mentions"
     };
 
     public static void main(String[] args) {
@@ -103,6 +103,17 @@ public class Main {
         }
     }
 
+
+
+    static private JsonObject getMentionsCount(String handle, String numDays) {
+        JsonObject output = new JsonObject();
+        int daysCount = Integer.parseInt(numDays);
+        TweetStream tweetStream = new TweetStream(handle);
+        int mentionsCount = tweetStream.getMentionsCount(daysCount);
+        output.addProperty("mentions_count", mentionsCount);
+
+        return output;
+    }
     static private boolean getBasicInfo(String handle) {
         Account account = new Account(handle);
         User user = account.verifyAccount();
@@ -165,16 +176,12 @@ public class Main {
 
                 for (Status status : statuses) {
                     JsonObject statusJson = new JsonObject();
-//                    statusJson.addProperty("id", status.getId());
-//                    statusJson.addProperty("text", status.getText());
-//                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
-//                    statusJson.addProperty("favourite_count", status.getFavoriteCount());
-//                    statusJson.addProperty("rt_count", status.getRetweetCount());
-//                    statusJson.addProperty("is_rt", status.isRetweet());
-                    int mentionsCount = tweetStream.getMentionsCount(daysCount);
-                    System.out.println("MENTIONS - " + mentionsCount);
-                    statusJson.addProperty("mentions_count", mentionsCount);
-
+                    statusJson.addProperty("id", status.getId());
+                    statusJson.addProperty("text", status.getText());
+                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
+                    statusJson.addProperty("favourite_count", status.getFavoriteCount());
+                    statusJson.addProperty("rt_count", status.getRetweetCount());
+                    statusJson.addProperty("is_rt", status.isRetweet());
 
                     output.add(statusJson);
                 }
