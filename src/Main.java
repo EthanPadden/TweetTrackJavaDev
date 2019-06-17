@@ -140,7 +140,6 @@ public class Main {
                     statusJson.addProperty("favourite_count", status.getFavoriteCount());
                     statusJson.addProperty("rt_count", status.getRetweetCount());
                     statusJson.addProperty("is_rt", status.isRetweet());
-
                     output.add(statusJson);
 
                 }
@@ -166,12 +165,16 @@ public class Main {
 
                 for (Status status : statuses) {
                     JsonObject statusJson = new JsonObject();
-                    statusJson.addProperty("id", status.getId());
-                    statusJson.addProperty("text", status.getText());
-                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
-                    statusJson.addProperty("favourite_count", status.getFavoriteCount());
-                    statusJson.addProperty("rt_count", status.getRetweetCount());
-                    statusJson.addProperty("is_rt", status.isRetweet());
+//                    statusJson.addProperty("id", status.getId());
+//                    statusJson.addProperty("text", status.getText());
+//                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
+//                    statusJson.addProperty("favourite_count", status.getFavoriteCount());
+//                    statusJson.addProperty("rt_count", status.getRetweetCount());
+//                    statusJson.addProperty("is_rt", status.isRetweet());
+                    int mentionsCount = tweetStream.getMentionsCount(daysCount);
+                    System.out.println("MENTIONS - " + mentionsCount);
+                    statusJson.addProperty("mentions_count", mentionsCount);
+
 
                     output.add(statusJson);
                 }

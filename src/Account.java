@@ -24,4 +24,8 @@ public class Account extends TwitterEntity{
             }
         }
     }
+
+    public User getUser () {
+        return user;
+    }
 }

@@ -1,6 +1,7 @@
 import com.google.gson.JsonObject;
 import twitter4j.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,6 +68,33 @@ public class TweetStream extends TwitterEntity{
                 System.out.println("Failed to get timeline: " + te.getMessage());
                 return null;
             }
+        }
+    }
+
+    public int getMentionsCount(int numDays) {
+        try {
+                        Date date = new Date();
+            date.setDate(date.getDate()-numDays);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+            String dateString = format.format(date);
+//            System.out.println();
+            Query query = new Query(user.getScreenName());
+            query.setSince(dateString);
+
+            QueryResult result = twitter.search(query);
+
+            return result.getTweets().size();
+//        } catch (TwitterException te) {
+//            return -1;
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.println("Caught");
+            return -2;
+        } catch (TwitterException e) {
+            e.printStackTrace();
+
+            return -1;
         }
     }
 }
