@@ -71,7 +71,7 @@ public class TweetStream extends TwitterEntity{
         }
     }
 
-    public Hashtable<String, Integer> getMentionsCount(int numDays) {
+    public Hashtable<String, Integer> getMentionsCount(int span, String unit) {
         try {
             Hashtable<String, Integer> mentionsRecord = new Hashtable<String, Integer>();
             Query query = new Query(user.getScreenName() + " +exclude:retweets");
@@ -79,72 +79,77 @@ public class TweetStream extends TwitterEntity{
             // Dates
             Date stepperDate = new Date();
             Date pastDate = new Date();
-            pastDate.setDate(stepperDate.getDate()-numDays);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String pastDateStr = format.format(pastDate);
-            String stepperDateStr = format.format(stepperDate);
 
-            // Query settings
-            query.setSince(pastDateStr);
-            query.setCount(100);
+            // Inputs come into play here
+            if(unit.compareTo("days") == 0)  {
+                pastDate.setDate(stepperDate.getDate()-span);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String pastDateStr = format.format(pastDate);
+                String stepperDateStr = format.format(stepperDate);
+                // Query settings
+                query.setSince(pastDateStr);
+                query.setCount(100);
+                try {
 
-            try {
+                    while(true) {
 
-                while(true) {
+                        QueryResult result = twitter.search(query);
+                        List<Status> batch = result.getTweets();
+                        if(batch.isEmpty()) break;
+                        // Look at first and last tweet - compare dates
+                        Status first = batch.get(0);
+                        int size = batch.size();
+                        Status last = batch.get(size-1);
+                        String fdate = format.format(first.getCreatedAt());
+                        String ldate = format.format(last.getCreatedAt());
 
-                    QueryResult result = twitter.search(query);
-                    List<Status> batch = result.getTweets();
-                    if(batch.isEmpty()) break;
-                    // Look at first and last tweet - compare dates
-                    Status first = batch.get(0);
-                    int size = batch.size();
-                    Status last = batch.get(size-1);
-                    String fdate = format.format(first.getCreatedAt());
-                    String ldate = format.format(last.getCreatedAt());
-
-                    if(fdate.compareTo(ldate) == 0) {
-                        int currentVal = 0;
-                        if(mentionsRecord.get(stepperDateStr) != null) {
-                            currentVal = mentionsRecord.get(stepperDateStr);
-                            mentionsRecord.put(stepperDateStr, currentVal+size);
-                        } else { // If there is no record yet
-                            mentionsRecord.put(stepperDateStr, size);
-                        }
-                    } else {
-                        // Loop through to hash dates
-                        int i = 0;
-                        while (i < batch.size()){
-                            if(stepperDateStr.compareTo(format.format(batch.get(i).getCreatedAt())) == 0) {
-                                int currentVal = 0;
-                                if(mentionsRecord.get(stepperDateStr) != null) {
-                                    currentVal = mentionsRecord.get(stepperDateStr);
-                                    mentionsRecord.put(stepperDateStr, currentVal+1);
-                                } else {
-                                    mentionsRecord.put(stepperDateStr, 1);
-                                }
-                                i++;
-                            } else {
-                                stepperDate.setDate(stepperDate.getDate()-1);
-                                stepperDateStr = format.format(stepperDate);
+                        if(fdate.compareTo(ldate) == 0) {
+                            int currentVal = 0;
+                            if(mentionsRecord.get(stepperDateStr) != null) {
+                                currentVal = mentionsRecord.get(stepperDateStr);
+                                mentionsRecord.put(stepperDateStr, currentVal+size);
+                            } else { // If there is no record yet
+                                mentionsRecord.put(stepperDateStr, size);
                             }
+                        } else {
+                            // Loop through to hash dates
+                            int i = 0;
+                            while (i < batch.size()){
+                                if(stepperDateStr.compareTo(format.format(batch.get(i).getCreatedAt())) == 0) {
+                                    int currentVal = 0;
+                                    if(mentionsRecord.get(stepperDateStr) != null) {
+                                        currentVal = mentionsRecord.get(stepperDateStr);
+                                        mentionsRecord.put(stepperDateStr, currentVal+1);
+                                    } else {
+                                        mentionsRecord.put(stepperDateStr, 1);
+                                    }
+                                    i++;
+                                } else {
+                                    stepperDate.setDate(stepperDate.getDate()-1);
+                                    stepperDateStr = format.format(stepperDate);
+                                }
+                            }
+
                         }
+
+                        if(result.hasNext())//there is more pages to load
+                        {
+                            System.out.println("HAS NEXT: " + result.hasNext());
+                            query = result.nextQuery();
+                        } else break;
+
 
                     }
 
-                    if(result.hasNext())//there is more pages to load
-                    {
-                        System.out.println("HAS NEXT: " + result.hasNext());
-                        query = result.nextQuery();
-                    } else break;
 
+                } catch (TwitterException te) {
+                    System.out.println("Couldn't connect: " + te);
 
                 }
-
-
-            } catch (TwitterException te) {
-                System.out.println("Couldn't connect: " + te);
-
             }
+
+
+
 
 
 //

@@ -64,7 +64,7 @@ public class Main {
                     System.exit(-1);
                 }
             } else if (args[0].equals(commands[2])) {
-                // TWEETS BY TIME: tweetbytime handle numDays
+                // TWEETS BY TIME: tweetbytime handle span unit
                 try {
                     List<JsonObject> output = getTweetsByTime(args[1], args[2]);
                     if (output == null) {
@@ -93,9 +93,9 @@ public class Main {
                     System.exit(-1);
                 }
             } else if (args[0].equals(commands[3])) {
-                // MENTIONS BY TIME: mentions handle numDays
+                // MENTIONS BY TIME: mentions handle numDays unit
                 try {
-                    boolean success = getMentionsCount(args[1], args[2]);
+                    boolean success = getMentionsCount(args[1], args[2], args[3]);
                     if (!success) {
                         System.out.println("Failed to get information for this handle");
                         System.exit(-1);
@@ -122,15 +122,15 @@ public class Main {
 
 
 
-    static private boolean getMentionsCount(String handle, String numDays) {
+    static private boolean getMentionsCount(String handle, String spanStr, String unit) {
         Account account = new Account(handle);
         User user = account.verifyAccount();
 
         if(user != null) {
-            int daysCount = Integer.parseInt(numDays);
+            int span = Integer.parseInt(spanStr);
 
             TweetStream tweetStream = new TweetStream(handle);
-            Hashtable<String, Integer> mentionsCount = tweetStream.getMentionsCount(daysCount);
+            Hashtable<String, Integer> mentionsCount = tweetStream.getMentionsCount(span, unit);
 
             if(mentionsCount == null) {
                 System.out.println("Failed to get mentions information");
