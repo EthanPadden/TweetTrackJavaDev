@@ -124,15 +124,21 @@ public class Main {
         User user = account.verifyAccount();
 
         if(user != null) {
-            JsonObject output = new JsonObject();
             int daysCount = Integer.parseInt(numDays);
 
             TweetStream tweetStream = new TweetStream(handle);
-            int mentionsCount = tweetStream.getMentionsCount(daysCount);
-            output.addProperty("mentions_count", mentionsCount);
+            Hashtable<String, Integer> mentionsCount = tweetStream.getMentionsCount(daysCount);
 
+            if(mentionsCount == null) {
+                System.out.println("Failed to get mentions information");
+                return false;
+            }
 
-            System.out.println(output.toString());
+            JsonObject entries = new JsonObject();
+            for(String key : mentionsCount.keySet()) {
+                entries.addProperty(key, mentionsCount.get(key));
+            }
+            System.out.println(entries.toString());
             return true;
         } else {
             return false;

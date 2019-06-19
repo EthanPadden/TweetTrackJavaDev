@@ -71,7 +71,7 @@ public class TweetStream extends TwitterEntity{
         }
     }
 
-    public int getMentionsCount(int numDays) {
+    public Hashtable<String, Integer> getMentionsCount(int numDays) {
         try {
             Hashtable<String, Integer> mentionsRecord = new Hashtable<String, Integer>();
             Query query = new Query(user.getScreenName() + " +exclude:retweets");
@@ -172,13 +172,14 @@ public class TweetStream extends TwitterEntity{
 //            }
 
 //            for(int m : dailyMentions) System.out.print(m + '\t');
-            return -1;
+
+            return mentionsRecord;
 
 
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             System.out.println("Caught");
-            return -2;
+            return null;
         }
     }
 }
