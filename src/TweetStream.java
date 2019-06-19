@@ -89,10 +89,7 @@ public class TweetStream extends TwitterEntity{
                 // Query settings
                 query.setSince(pastDateStr);
                 query.setCount(100);
-                try {
-
                     while(true) {
-
                         QueryResult result = twitter.search(query);
                         List<Status> batch = result.getTweets();
                         if(batch.isEmpty()) break;
@@ -142,41 +139,139 @@ public class TweetStream extends TwitterEntity{
                     }
 
 
-                } catch (TwitterException te) {
-                    System.out.println("Couldn't connect: " + te);
+
+            } else if (unit.compareTo("hours") == 0) {
+                pastDate.setHours(stepperDate.getHours() - span);
+                // TODO: Check hours changing over midnight
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String pastDateStr = format.format(pastDate);
+                // Query settings
+                query.setSince(pastDateStr);
+                query.setCount(100);
+                while(true) {
+                    QueryResult result = twitter.search(query);
+                    List<Status> batch = result.getTweets();
+                    if(batch.isEmpty()) break;
+                    // Look at first and last tweet - compare dates
+                    Status first = batch.get(0);
+                    int size = batch.size();
+                    Status last = batch.get(size-1);
+                    int fhours  = first.getCreatedAt().getHours();
+                    int lhours  = last.getCreatedAt().getHours();
+                    String timeAppend = ":00";
+
+                    if(fhours == lhours) {
+                        int currentVal = 0;
+                        if(mentionsRecord.get(stepperDate.getHours()+timeAppend) != null) {
+                            currentVal = mentionsRecord.get(stepperDate.getHours()+timeAppend);
+                            mentionsRecord.put(stepperDate.getHours()+timeAppend, currentVal+size);
+                        } else { // If there is no record yet
+                            mentionsRecord.put(stepperDate.getHours()+timeAppend, size);
+                        }
+                    } else {
+                        // Loop through to hash dates
+                        int i = 0;
+                        Date compareStepperDate = stepperDate;
+                        Date comparePastDate = pastDate;
+                        comparePastDate.setMinutes(0);
+                        comparePastDate.setSeconds(0);
+                        compareStepperDate.setMinutes(0);
+                        compareStepperDate.setMinutes(0);
+
+                        while (i < batch.size() && compareStepperDate.compareTo(comparePastDate) > 0){
+                            if(stepperDate.getHours() == batch.get(i).getCreatedAt().getHours()) {
+                                int currentVal = 0;
+                                if(mentionsRecord.get(stepperDate.getHours()+timeAppend) != null) {
+                                    currentVal = mentionsRecord.get(stepperDate.getHours()+timeAppend);
+                                    mentionsRecord.put(stepperDate.getHours()+timeAppend, currentVal+1);
+                                } else {
+                                    mentionsRecord.put(stepperDate.getHours()+timeAppend, 1);
+                                }
+                                i++;
+                            } else {
+                                stepperDate.setHours(stepperDate.getHours()-1);
+                            }
+                        }
+
+                    }
+
+                    if(result.hasNext())//there is more pages to load
+                    {
+                        System.out.println("HAS NEXT: " + result.hasNext());
+                        query = result.nextQuery();
+                    } else break;
+
 
                 }
+
+
+
             }
+                /**
+                pastDate.setHours(stepperDate.getHours() - span);
+                // TODO: Check hours changing over midnight
+
+                // Query settings
+                query.setCount(100);
+
+                while(true) {
+                    QueryResult result = twitter.search(query);
+                    List<Status> batch = result.getTweets();
+                    if(batch.isEmpty()) break;
+
+                    // Look at first and last tweet - compare hours
+                    Status first = batch.get(0);
+                    int size = batch.size();
+                    Status last = batch.get(size-1);
+                    int fhours  = first.getCreatedAt().getHours();
+                    int lhours  = last.getCreatedAt().getHours();
+                    String timeAppend = ":00";
+
+                    if(fhours == lhours) {
+                        int currentVal = 0;
+                        if(mentionsRecord.get(fhours) != null) {
+                            currentVal = mentionsRecord.get(fhours);
+                            mentionsRecord.put(fhours+timeAppend, currentVal+size);
+                        } else { // If there is no record yet
+                            mentionsRecord.put(fhours+timeAppend, size);
+                        }
+                    } else {
+                        // Loop through to hash dates
+                        int i = 0;
+                        while (i < batch.size()){
+                            if(fhours == batch.get(i).getCreatedAt().getHours()) {
+                                int currentVal = 0;
+                                if(mentionsRecord.get(fhours+timeAppend) != null) {
+                                    currentVal = mentionsRecord.get(fhours+timeAppend);
+                                    mentionsRecord.put(fhours+timeAppend, currentVal+1);
+                                } else {
+                                    mentionsRecord.put(fhours+timeAppend, 1);
+                                }
+                                i++;
+                            } else {
+                                stepperDate.setDate(stepperDate.getDate()-1);
+                                stepperDateStr = format.format(stepperDate);
+                            }
+                        }
+
+                    }
+
+                    if(result.hasNext())//there is more pages to load
+                    {
+                        System.out.println("HAS NEXT: " + result.hasNext());
+                        query = result.nextQuery();
+                    } else break;
+
+
+                }
 
 
 
-
-
-//
-//            int i = 0;
-//            int j = 0;
-//            int[] dailyMentions = new int[numDays];
-//            int todayMentions = 0;
-
-//            // While the stepper date since or on the past date
-//            while (stepperDate.compareTo(pastDate) >= 0 && i < tweets.size()) {
-//                Status status = tweets.get(i);
-//
-//                String stepperDateStr = format.format(stepperDate);
-//                String statusDateStr = format.format(status.getCreatedAt());
-//
-//                if (stepperDateStr.compareTo(statusDateStr) == 0) {
-//                    todayMentions++;
-//                    i++;
-//                } else {
-//                    dailyMentions[j] = todayMentions;
-//                    j++;
-//                    todayMentions = 0;
-//                    stepperDate.setDate(stepperDate.getDate()-1);
-//                }
-//            }
-
-//            for(int m : dailyMentions) System.out.print(m + '\t');
+            }**/ else {
+                System.out.println("Enter valid unit argument");
+                System.exit(-1);
+            }
 
             return mentionsRecord;
 
@@ -185,7 +280,11 @@ public class TweetStream extends TwitterEntity{
             e.printStackTrace();
             System.out.println("Caught");
             return null;
+        } catch (TwitterException te) {
+            System.out.println("Couldn't connect: " + te);
+            return null;
         }
+
     }
 }
 
