@@ -16,7 +16,7 @@ public class Main {
      * **/
 
     private static final String[] commands = {
-        "overview", "tweetstats", "tweetbytime"
+        "overview", "tweetstats", "tweetbytime", "mentions"
     };
 
     public static void main(String[] args) {
@@ -85,8 +85,22 @@ public class Main {
                         }
                         System.exit(0);
                     }
+
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("Input must be of the form: command handle numberOfTweets");
+                    System.exit(-1);
+                }
+            } else if (args[0].equals(commands[3])) {
+                try {
+                    boolean success = getMentionsCount(args[1], args[2]);
+                    if (!success) {
+                        System.out.println("Failed to get information for this handle");
+                        System.exit(-1);
+                    } else {
+                        System.exit(0);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("A Twitter handle must be inputted");
                     System.exit(-1);
                 }
             }
@@ -103,6 +117,33 @@ public class Main {
         }
     }
 
+
+
+    static private boolean getMentionsCount(String handle, String numDays) {
+        Account account = new Account(handle);
+        User user = account.verifyAccount();
+
+        if(user != null) {
+            int daysCount = Integer.parseInt(numDays);
+
+            TweetStream tweetStream = new TweetStream(handle);
+            Hashtable<String, Integer> mentionsCount = tweetStream.getMentionsCount(daysCount);
+
+            if(mentionsCount == null) {
+                System.out.println("Failed to get mentions information");
+                return false;
+            }
+
+            JsonObject entries = new JsonObject();
+            for(String key : mentionsCount.keySet()) {
+                entries.addProperty(key, mentionsCount.get(key));
+            }
+            System.out.println(entries.toString());
+            return true;
+        } else {
+            return false;
+        }
+    }
     static private boolean getBasicInfo(String handle) {
         Account account = new Account(handle);
         User user = account.verifyAccount();
@@ -140,7 +181,6 @@ public class Main {
                     statusJson.addProperty("favourite_count", status.getFavoriteCount());
                     statusJson.addProperty("rt_count", status.getRetweetCount());
                     statusJson.addProperty("is_rt", status.isRetweet());
-
                     output.add(statusJson);
 
                 }
