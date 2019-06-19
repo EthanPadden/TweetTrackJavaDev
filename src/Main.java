@@ -22,6 +22,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             if (args[0].equals(commands[0])) {
+                // OVERVIEW: overview handle
                 try {
                     boolean success = getBasicInfo(args[1]);
                     if (!success) {
@@ -35,6 +36,7 @@ public class Main {
                     System.exit(-1);
                 }
             } else if (args[0].equals(commands[1])) {
+                // TWEET STATS: tweetstats handle tweetCount
                 try {
                     List<JsonObject> output = getTweets(args[1], args[2]);
                     if (output == null) {
@@ -61,8 +63,8 @@ public class Main {
                     System.out.println("Input must be of the form: command handle numberOfTweets");
                     System.exit(-1);
                 }
-            }
-                else if (args[0].equals(commands[2])) {
+            } else if (args[0].equals(commands[2])) {
+                // TWEETS BY TIME: tweetbytime handle numDays
                 try {
                     List<JsonObject> output = getTweetsByTime(args[1], args[2]);
                     if (output == null) {
@@ -91,6 +93,7 @@ public class Main {
                     System.exit(-1);
                 }
             } else if (args[0].equals(commands[3])) {
+                // MENTIONS BY TIME: mentions handle numDays
                 try {
                     boolean success = getMentionsCount(args[1], args[2]);
                     if (!success) {
