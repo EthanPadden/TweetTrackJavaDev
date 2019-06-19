@@ -85,8 +85,22 @@ public class Main {
                         }
                         System.exit(0);
                     }
+
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("Input must be of the form: command handle numberOfTweets");
+                    System.exit(-1);
+                }
+            } else if (args[0].equals(commands[3])) {
+                try {
+                    boolean success = getMentionsCount(args[1], args[2]);
+                    if (!success) {
+                        System.out.println("Failed to get information for this handle");
+                        System.exit(-1);
+                    } else {
+                        System.exit(0);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("A Twitter handle must be inputted");
                     System.exit(-1);
                 }
             }
@@ -105,14 +119,24 @@ public class Main {
 
 
 
-    static private JsonObject getMentionsCount(String handle, String numDays) {
-        JsonObject output = new JsonObject();
-        int daysCount = Integer.parseInt(numDays);
-        TweetStream tweetStream = new TweetStream(handle);
-        int mentionsCount = tweetStream.getMentionsCount(daysCount);
-        output.addProperty("mentions_count", mentionsCount);
+    static private boolean getMentionsCount(String handle, String numDays) {
+        Account account = new Account(handle);
+        User user = account.verifyAccount();
 
-        return output;
+        if(user != null) {
+            JsonObject output = new JsonObject();
+            int daysCount = Integer.parseInt(numDays);
+
+            TweetStream tweetStream = new TweetStream(handle);
+            int mentionsCount = tweetStream.getMentionsCount(daysCount);
+            output.addProperty("mentions_count", mentionsCount);
+
+
+            System.out.println(output.toString());
+            return true;
+        } else {
+            return false;
+        }
     }
     static private boolean getBasicInfo(String handle) {
         Account account = new Account(handle);
