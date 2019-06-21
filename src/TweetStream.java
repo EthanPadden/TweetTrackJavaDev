@@ -1,5 +1,6 @@
 import twitter4j.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -147,31 +148,6 @@ public class TweetStream extends TwitterEntity{
             }
 
 
-//
-//            int i = 0;
-//            int j = 0;
-//            int[] dailyMentions = new int[numDays];
-//            int todayMentions = 0;
-
-//            // While the stepper date since or on the past date
-//            while (stepperDate.compareTo(pastDate) >= 0 && i < tweets.size()) {
-//                Status status = tweets.get(i);
-//
-//                String stepperDateStr = format.format(stepperDate);
-//                String statusDateStr = format.format(status.getCreatedAt());
-//
-//                if (stepperDateStr.compareTo(statusDateStr) == 0) {
-//                    todayMentions++;
-//                    i++;
-//                } else {
-//                    dailyMentions[j] = todayMentions;
-//                    j++;
-//                    todayMentions = 0;
-//                    stepperDate.setDate(stepperDate.getDate()-1);
-//                }
-//            }
-
-//            for(int m : dailyMentions) System.out.print(m + '\t');
 
             return mentionsRecord;
 
@@ -180,6 +156,53 @@ public class TweetStream extends TwitterEntity{
             e.printStackTrace();
             System.out.println("Caught");
             return null;
+        }
+    }
+
+    public List<Status> getTweetsByTime(String startDateStr, String endDateStr) {
+        /** DATE FORMAT:
+         * dd/MM/yyyy
+         * **/
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date startDate = sdf.parse(startDateStr);
+            Date endDate = sdf.parse(endDateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // HERE
+        if(user == null) return null;
+        else {
+            String handle = user.getScreenName();
+
+            // Note - more paging for more than 200 tweets
+            Paging paging = new Paging(1,200);
+
+            try {
+                List<Status> statuses = twitter.getUserTimeline(handle,paging);
+                if(statuses.size() <= 1) return null;
+
+                ArrayList<Status> output = new ArrayList<Status>();
+                Date date = new Date();
+                date.setDate(date.getDate()-numDays);
+
+                for(Status status : statuses) {
+                    if(status.getCreatedAt().compareTo(date) > 0){
+                        output.add(status);
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+                return output;
+            } catch (TwitterException te) {
+                te.printStackTrace();
+                System.out.println("Failed to get timeline: " + te.getMessage());
+                return null;
+            }
         }
     }
 }
