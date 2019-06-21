@@ -159,17 +159,20 @@ public class TweetStream extends TwitterEntity{
         }
     }
 
-    public List<Status> getTweetsByTime(String startDateStr, String endDateStr) {
+    public List<Status> getTweetsByDate(String startDateStr, String endDateStr) {
         /** DATE FORMAT:
          * dd/MM/yyyy
          * **/
 
+        Date startDate;
+        Date endDate;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date startDate = sdf.parse(startDateStr);
-            Date endDate = sdf.parse(endDateStr);
+            startDate = sdf.parse(startDateStr);
+            endDate = sdf.parse(endDateStr);
         } catch (ParseException e) {
             e.printStackTrace();
+            return null;
         }
 
         // HERE
@@ -177,32 +180,51 @@ public class TweetStream extends TwitterEntity{
         else {
             String handle = user.getScreenName();
 
-            // Note - more paging for more than 200 tweets
-            Paging paging = new Paging(1,200);
 
+
+            /** APPROACH:
+             * i = 1
+             * while(true){
+             * get page i
+             * if(last tweet on page date > startDate):
+             *      add all tweets to list
+             *      i++
+             * else:
+             *      break;
+             * }
+             *
+             * process current page - go through and add individual tweets
+             * **/
             try {
-                List<Status> statuses = twitter.getUserTimeline(handle,paging);
-                if(statuses.size() <= 1) return null;
 
-                ArrayList<Status> output = new ArrayList<Status>();
-                Date date = new Date();
-                date.setDate(date.getDate()-numDays);
-
-                for(Status status : statuses) {
-                    if(status.getCreatedAt().compareTo(date) > 0){
-                        output.add(status);
-                    }
-                    else {
-                        break;
-                    }
+                int i = 1;
+//            Paging paging = new Paging(1,200);
+                Paging paging;
+                List<Status> statuses = new ArrayList<Status>();
+                List<Status> page;
+                while (true) {
+                    paging = new Paging(i, 200);
+                    page = twitter.getUserTimeline(handle, paging);
+                    int lastIndex = page.size()-1;
+                    if(page.get(lastIndex).getCreatedAt().compareTo(startDate) > 0) {
+                        statuses.addAll(page);
+                        i++;
+                    } else break;
                 }
 
-                return output;
+                for(Status status : page) {
+                    if(status.getCreatedAt().compareTo(startDate) > 0) statuses.add(status);
+                    else break;
+                }
+                return statuses;
+
             } catch (TwitterException te) {
                 te.printStackTrace();
                 System.out.println("Failed to get timeline: " + te.getMessage());
                 return null;
             }
+
+
         }
     }
 }
