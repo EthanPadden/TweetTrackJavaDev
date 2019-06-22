@@ -1,85 +1,88 @@
-{"id":1142181516870422528,"test":"@s8n Swear it works great in hell or yer 💰 back","date":"Fri Jun 21 22:24:28 BST 2019"}
-{"id":1142181026862522368,"test":"@PolyBork @s8n Haha","date":"Fri Jun 21 22:22:32 BST 2019"}
-{"id":1142180621877334017,"test":"@s8n https://t.co/Fd4Ab64rOk","date":"Fri Jun 21 22:20:55 BST 2019"}
-{"id":1142134742726275072,"test":"@alex_avoigt @ValueAnalyst1 @MickPaul4 @Tesla A few other small things change, but pretty close","date":"Fri Jun 21 19:18:37 BST 2019"}
-{"id":1142132563999219712,"test":"RT @Tesla: Model 3 never felt so \"right\" https://t.co/cebkTJWJcI","date":"Fri Jun 21 19:09:57 BST 2019"}
-{"id":1142130690848256002,"test":"@tmornini @Tesla Tesla is putting significant resources into high-efficiency battery recycling. Makes both environmental & economic sense. Please consider joining if interested in recycling engineering!","date":"Fri Jun 21 19:02:31 BST 2019"}
-{"id":1142115432649777152,"test":"@tmornini @Tesla No, we’re already recycling them","date":"Fri Jun 21 18:01:53 BST 2019"}
-{"id":1141978540021170176,"test":"@eugenelee3 @engineers_feed Yes, demographics, stratified by age, will look like an upside down pyramid with many old people & fewer young","date":"Fri Jun 21 08:57:55 BST 2019"}
-{"id":1141977875567919104,"test":"@engineers_feed Real issue will an aging & declining world population by 2050, *not* overpopulation. Randers estimate far more accurate than UN imo: https://t.co/cdHf62bxpb","date":"Fri Jun 21 08:55:17 BST 2019"}
-{"id":1141805140581613574,"test":"@Kristennetten https://t.co/IOGjoFzGDH","date":"Thu Jun 20 21:28:53 BST 2019"}
-{"id":1141803607362166784,"test":"We are the Von Neumann machines","date":"Thu Jun 20 21:22:48 BST 2019"}
-{"id":1141783924508516352,"test":"https://t.co/GcsHAMgnXz","date":"Thu Jun 20 20:04:35 BST 2019"}
-{"id":1141782573498040320,"test":"@hntrcllns Yezz","date":"Thu Jun 20 19:59:13 BST 2019"}
-{"id":1141781922500239361,"test":"Stonk tip of the day https://t.co/tvPodcAtkK","date":"Thu Jun 20 19:56:38 BST 2019"}
-{"id":1141779311155744768,"test":"Kids playing Beach Buggy in Tesla store https://t.co/palYq9rPzl","date":"Thu Jun 20 19:46:15 BST 2019"}
-{"id":1141770185667469312,"test":"@Cmdr_Hadfield @SpaceX @OurWorldInData Exactly. And many areas of countries showing good Internet actually have poor or no access, so those are important to address too.","date":"Thu Jun 20 19:09:59 BST 2019"}
-{"id":1141530584046604295,"test":"@marshgre @Model3Owners One of my favorite original Roadster colors!","date":"Thu Jun 20 03:17:54 BST 2019"}
-{"id":1141530118621257729,"test":"@Model3Owners How about baby pink?","date":"Thu Jun 20 03:16:03 BST 2019"}
-{"id":1141439850861588480,"test":"Reminder that US federal tax drops by $1875 for any Tesla delivered after June 30. Order online at https://t.co/46TXqRrsdr.","date":"Wed Jun 19 21:17:22 BST 2019"}
-{"id":1141420018183262208,"test":"RT @vincent13031925: Ok, I tried the new game “Beach Buggy Racing 2 Tesla Edition” on the Model 3 – it’s super fun & cool 😆😆😆😆😆😆🚗🚗🚗\n\nAnd yo…","date":"Wed Jun 19 19:58:33 BST 2019"}
-{"id":1141419842139852800,"test":"@Model3Owners Changing the palette is hell on service, because cars last for 20 years. Every color change has a long tail of hurt, especially for Model 3.","date":"Wed Jun 19 19:57:51 BST 2019"}
-{"id":1141411390155980800,"test":"@dealer_of_happy A simple white (not pearl multi-coat)","date":"Wed Jun 19 19:24:16 BST 2019"}
-{"id":1141409584457768960,"test":"Starting next month, Tesla will charge $1000 for color black (same price as silver)","date":"Wed Jun 19 19:17:05 BST 2019"}
-{"id":1141378360544641024,"test":"@techAU @Tesla Will consider","date":"Wed Jun 19 17:13:01 BST 2019"}
-{"id":1141375028321062912,"test":"@Teslarati This will be our most difficult launch ever","date":"Wed Jun 19 16:59:47 BST 2019"}
-{"id":1141367104702038016,"test":"@KTLA @HPRoboCop But on the inside … https://t.co/tKvRtCYiMN","date":"Wed Jun 19 16:28:17 BST 2019"}
-{"id":1141201369556119554,"test":"@JaneidyEve @cleantechnica @Tesla Original Star Wars","date":"Wed Jun 19 05:29:43 BST 2019"}
-{"id":1141198742919344130,"test":"@cleantechnica @Tesla Sole meunière\nhttps://t.co/EYi4gHmJ5X","date":"Wed Jun 19 05:19:17 BST 2019"}
-{"id":1141169500512870400,"test":"@amir_sarrafi Probably fine. Some Tesla taxis in Amsterdam have 3 times that mileage.","date":"Wed Jun 19 03:23:05 BST 2019"}
-{"id":1141132845202599937,"test":"@nichegamer Actually, I stole it from my secret meme dealer #moneygang","date":"Wed Jun 19 00:57:26 BST 2019"}
-{"id":1141131693954195456,"test":"RT @AF_SMC: The 3700 kg Integrated Payload Stack (IPS) for #STP2 has been completed! Have a look before it blasts off on the first #DoD Fal…","date":"Wed Jun 19 00:52:51 BST 2019"}
-{"id":1141064867039727616,"test":"@flcnhvy 🎶 Non, je ne regrette meme 🎶","date":"Tue Jun 18 20:27:18 BST 2019"}
-{"id":1141062780012978176,"test":"@TeslaTn @28delayslater @CNBC 🤣🤣","date":"Tue Jun 18 20:19:01 BST 2019"}
-{"id":1141062737960853504,"test":"@28delayslater Missed you too ♥️","date":"Tue Jun 18 20:18:51 BST 2019"}
-{"id":1141052390759698433,"test":"Touched by an 😇 https://t.co/LqPQ5Ff0PK","date":"Tue Jun 18 19:37:44 BST 2019"}
-{"id":1141047201310789632,"test":"RT @Tesla: Beach Buggy Racing 2 by @vectorunit is starting to roll out to Tesla cars today","date":"Tue Jun 18 19:17:07 BST 2019"}
-{"id":1141047129122566144,"test":"RT @Tesla: Pit crew sold separately. Visit our stores for more details: https://t.co/3y0mR3TwV9","date":"Tue Jun 18 19:16:49 BST 2019"}
-{"id":1141047095329083392,"test":"RT @Tesla: Your next charging session is going to be SO 👏 MUCH 👏 FUN 👏 https://t.co/5YzSL36kCC","date":"Tue Jun 18 19:16:41 BST 2019"}
-{"id":1140476920322068480,"test":"@vincent13031925 @TeslaMiles @ShadowCatTrash Not sure yet","date":"Mon Jun 17 05:31:01 BST 2019"}
-{"id":1140475714136768512,"test":"@hair_tennant My chariot license is made of papyrus!","date":"Mon Jun 17 05:26:13 BST 2019"}
-{"id":1140473067375751168,"test":"@TeslaMiles @ShadowCatTrash That’s the Tesla part","date":"Mon Jun 17 05:15:42 BST 2019"}
-{"id":1140472581885067264,"test":"@ShadowCatTrash Overall master plan should be explained. I think it still makes sense if we don’t consider AI 2b other.","date":"Mon Jun 17 05:13:47 BST 2019"}
-{"id":1140470887721816064,"test":"@hair_tennant I’ve been tweeting strange shit since Ramses II. He was a great pharaoh!","date":"Mon Jun 17 05:07:03 BST 2019"}
-{"id":1140414413322670080,"test":"@flcnhvy @bluestonenew @DigitalTrends @SpaceX Might get pushed to next month. Starhopper flight first. Waiting on engine repair.","date":"Mon Jun 17 01:22:38 BST 2019"}
-{"id":1140409588279209984,"test":"@bluestonenew @DigitalTrends @SpaceX 10 years ago, SpaceX server room was named Skynet as a joke. Fate 🖤 irony.","date":"Mon Jun 17 01:03:28 BST 2019"}
-{"id":1140392195943325696,"test":"@JohnnaCrider1 @NASA @SpaceX @NASA_Technology @reddit Thanks 😀","date":"Sun Jun 16 23:54:21 BST 2019"}
-{"id":1140389809384411136,"test":"RT @NASA: When @SpaceX’s Falcon Heavy rocket launches, it will carry @NASA_Technology, including an atomic clock for space navigation &  sp…","date":"Sun Jun 16 23:44:52 BST 2019"}
-{"id":1140359196308729856,"test":"Model 3 arriving in UK https://t.co/0azvITNZTn","date":"Sun Jun 16 21:43:13 BST 2019"}
-{"id":1140305835504963584,"test":"@mark_schreurs Good question. Will consider thoughtful response.","date":"Sun Jun 16 18:11:11 BST 2019"}
-{"id":1140062069183483905,"test":"@flcnhvy @cleantechnica By far","date":"Sun Jun 16 02:02:33 BST 2019"}
-{"id":1140061487160909824,"test":"@cleantechnica Good analysis. Both computers will be used & sync ~20 times per second. This is a long time to a computer. Like a twin-engine plane, use both engines to max for normal operation, but can safely operate on just one.","date":"Sun Jun 16 02:00:14 BST 2019"}
-{"id":1140035599950176256,"test":"https://t.co/KTItxbXTbG","date":"Sun Jun 16 00:17:22 BST 2019"}
-{"id":1140035558594363392,"test":"https://t.co/bhKdyN5hR6","date":"Sun Jun 16 00:17:12 BST 2019"}
-{"id":1140013528645947393,"test":"Falcon Rising https://t.co/XnXlTL8lhI","date":"Sat Jun 15 22:49:40 BST 2019"}
-{"id":1140007351384043520,"test":"@nichegamer BG2 was so good","date":"Sat Jun 15 22:25:07 BST 2019"}
-{"id":1139993741089898496,"test":"@rstar346 @elonmusknt @Phil343thomas @TonyWuGZ @Tesla No need, Top Gear already did https://t.co/dNEgqYHe7N","date":"Sat Jun 15 21:31:02 BST 2019"}
-{"id":1139992233040420864,"test":"@ClickHole The Ass Blade of Vengeance!","date":"Sat Jun 15 21:25:03 BST 2019"}
-{"id":1139987306914279425,"test":"@OrangeDurito @Space_Station Weird that this actually happened. Music makes a big difference.","date":"Sat Jun 15 21:05:28 BST 2019"}
-{"id":1139962675092320257,"test":"Unlike bees, who are experts in millinery https://t.co/DhbkDqa19B","date":"Sat Jun 15 19:27:35 BST 2019"}
-{"id":1139959037166907393,"test":"Truth is a metaphorical concept with no footwear or clothing of anything kind. Also, baby don’t hurt me haha \nhttps://t.co/AKWsAqa3Ep https://t.co/bLBDQiqBTZ","date":"Sat Jun 15 19:13:08 BST 2019"}
-{"id":1139953128856379392,"test":"@BTermanini @sascha_p @TonyWuGZ @Tesla Yes, excessively configurable seats almost always make things worse, rather than better. Too complex & unwieldy.","date":"Sat Jun 15 18:49:39 BST 2019"}
-{"id":1139951976236507140,"test":"@dohmanbob @ATX_fight_club Cool, that’s the way it should be!","date":"Sat Jun 15 18:45:05 BST 2019"}
-{"id":1139722712236974081,"test":"Can’t fool me it was 1669 https://t.co/WRNyfi4dXw","date":"Sat Jun 15 03:34:04 BST 2019"}
-{"id":1139721447432019968,"test":"@AugmentedRyan @futurism Sounds about right","date":"Sat Jun 15 03:29:02 BST 2019"}
-{"id":1139719899595472896,"test":"@futurism Don’t make me challenge you to a rap battle!!","date":"Sat Jun 15 03:22:53 BST 2019"}
-{"id":1139719644300771328,"test":"@futurism Fair point","date":"Sat Jun 15 03:21:52 BST 2019"}
-{"id":1139718023638421504,"test":"@kulpability @MikeAmmo Yeah, dual motor AWD is super fun!","date":"Sat Jun 15 03:15:26 BST 2019"}
-{"id":1139699056530214912,"test":"@S_Padival @MikeAmmo 😉","date":"Sat Jun 15 02:00:04 BST 2019"}
-{"id":1139693424586526720,"test":"@MikeAmmo RWD with all-weather tires works great. Tesla traction control is an order of magnitude more precise than gas/diesel. Really helps to have Newton & Maxwell on your side.","date":"Sat Jun 15 01:37:41 BST 2019"}
-{"id":1139622737809293312,"test":"@DavidCarlstrom Thanks Bob! He is a tough critic.","date":"Fri Jun 14 20:56:48 BST 2019"}
-{"id":1139614882683183104,"test":"“Not only was the paint without any discernible flaw, but the various panels formed a body of precision that was beyond reproach”\nhttps://t.co/qISnFBiW9p","date":"Fri Jun 14 20:25:35 BST 2019"}
-{"id":1139356617911128064,"test":"RT @Tesla: When you finally meet a car who's into low maintenance relationships: https://t.co/6p165JOp6H","date":"Fri Jun 14 03:19:20 BST 2019"}
-{"id":1139352355768373248,"test":"Also $2500 tax credit for California & $500 to $800 utility incentive https://t.co/lmD3ZNFR9M","date":"Fri Jun 14 03:02:24 BST 2019"}
-{"id":1139350070464094208,"test":"RT @MrTommyCampbell: @elonmusk Buy a Tesla. You will never be happier with a purchase in your life!","date":"Fri Jun 14 02:53:19 BST 2019"}
-{"id":1139349516304277504,"test":"US tax credit of $3750 drops in half for Tesla on July 1. Order online in a few mins at https://t.co/46TXqRrsdr. Return in 7 days for full refund.","date":"Fri Jun 14 02:51:07 BST 2019"}
-{"id":1139298574489907200,"test":"Tesla Solar Toof Tile V3.0 starting early trials https://t.co/ueqBOovxYM","date":"Thu Jun 13 23:28:41 BST 2019"}
-{"id":1139286306259816449,"test":"@Starlight_Energ @28delayslater @Tesla Exactly","date":"Thu Jun 13 22:39:56 BST 2019"}
-{"id":1139268417288933377,"test":"RT @thegameawards: A racing game for @Tesla you can use the steering wheel with!? 🤯Thank you @elonmusk! #E3Coliseum https://t.co/npzrts78aA","date":"Thu Jun 13 21:28:51 BST 2019"}
-{"id":1139208765691924483,"test":"@pewdiepie (muffled titter) https://t.co/xAOnOzkDg6","date":"Thu Jun 13 17:31:49 BST 2019"}
-{"id":1139191543577731077,"test":"@pewdiepie Haha","date":"Thu Jun 13 16:23:23 BST 2019"}
-{"id":1139191115863580672,"test":"RT @TeslaNY: “I think it's basically financially insane to buy anything except an electric car that is upgradable to autonomy ... It's long…","date":"Thu Jun 13 16:21:41 BST 2019"}
-{"id":1139053949514764288,"test":"@RPMTESLA Would be good to look up electricity rates by location & optimize cost automatically","date":"Thu Jun 13 07:16:38 BST 2019"}
-{"id":1139030512457195522,"test":"@tesla_truth Yeah, they were a little off the mark https://t.co/yqZhvkbdrt","date":"Thu Jun 13 05:43:30 BST 2019"}
-{"id":1139022467526287361,"test":"@Erdayastronaut @SpaceX Fun!","date":"Thu Jun 13 05:11:32 BST 2019"}
-{"id":1138979630516334592,"test":"@cleantechnica Applies to a small number of Bay Area residents, but worth checking out","date":"Thu Jun 13 02:21:19 BST 2019"}
+1142501689586409472
+1142498938630443008
+1142491430796984320
+1142181516870422528
+1142181026862522368
+1142180621877334017
+1142134742726275072
+1142132563999219712
+1142130690848256002
+1142115432649777152
+1141978540021170176
+1141977875567919104
+1141805140581613574
+1141803607362166784
+1141783924508516352
+1141782573498040320
+1141781922500239361
+1141779311155744768
+1141770185667469312
+1141530584046604295
+1141530118621257729
+1141439850861588480
+1141420018183262208
+1141419842139852800
+1141411390155980800
+1141409584457768960
+1141378360544641024
+1141375028321062912
+1141367104702038016
+1141201369556119554
+1141198742919344130
+1141169500512870400
+1141132845202599937
+1141131693954195456
+1141064867039727616
+1141062780012978176
+1141062737960853504
+1141052390759698433
+1141047201310789632
+1141047129122566144
+1141047095329083392
+1140476920322068480
+1140475714136768512
+1140473067375751168
+1140472581885067264
+1140470887721816064
+1140414413322670080
+1140409588279209984
+1140392195943325696
+1140389809384411136
+1140359196308729856
+1140305835504963584
+1140062069183483905
+1140061487160909824
+1140035599950176256
+1140035558594363392
+1140013528645947393
+1140007351384043520
+1139993741089898496
+1139992233040420864
+1139987306914279425
+1139962675092320257
+1139959037166907393
+1139953128856379392
+1139951976236507140
+1139722712236974081
+1139721447432019968
+1139719899595472896
+1139719644300771328
+1139718023638421504
+1139699056530214912
+1139693424586526720
+1139622737809293312
+1139614882683183104
+1139356617911128064
+1139352355768373248
+1139350070464094208
+1139349516304277504
+1139298574489907200
+1139286306259816449
+1139268417288933377
+1139208765691924483
+1139191543577731077
+1139191115863580672
+1139053949514764288
+1139030512457195522
+1139022467526287361
+1138979630516334592

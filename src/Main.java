@@ -104,7 +104,7 @@ public class Main {
                 }
             } else if (args[0].equals(commands[4])) {
                 try {
-                    List<JsonObject> output = getTweetsByDate(args[1], args[2], args[3]);
+                    List<Long> output = getTweetsByDate(args[1], args[2], args[3]);
 
                     if (output == null) {
                         System.out.println("Failed to get information for this handle");
@@ -112,8 +112,8 @@ public class Main {
                     } else {
                         try {
                             PrintWriter printWriter = new PrintWriter(args[4]);
-                            for (JsonObject statusJson : output){
-                                printWriter.println(statusJson.toString());
+                            for (long status : output){
+                                printWriter.println(status);
                                 printWriter.flush();
                             }
                             System.out.flush();
@@ -250,21 +250,16 @@ public class Main {
         }
     }
 
-    static private List<JsonObject> getTweetsByDate(String handle, String startDateStr, String endDateStr) {
+    static private List<Long> getTweetsByDate(String handle, String startDateStr, String endDateStr) {
         try {
             TweetStream tweetStream = new TweetStream(handle);
             List<Status> statuses = tweetStream.getTweetsByDate(startDateStr, endDateStr);
 
             if (statuses == null) return null;
             else {
-                ArrayList<JsonObject> output = new ArrayList<JsonObject>();
+                ArrayList<Long> output = new ArrayList<Long>();
                 for (Status status : statuses) {
-                    JsonObject statusJson = new JsonObject();
-                    statusJson.addProperty("id", status.getId());
-                    statusJson.addProperty("test", status.getText());
-                    statusJson.addProperty("date", status.getCreatedAt().toString());
-
-                    output.add(statusJson);
+                    output.add(status.getId());
                 }
                 return output;
             }
