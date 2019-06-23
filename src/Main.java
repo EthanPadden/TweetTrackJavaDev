@@ -16,7 +16,7 @@ public class Main {
      **/
 
     private static final String[] commands = {
-            "overview", "tweetstats", "tweetbytime", "mentions", "tweetbydate"
+            "overview", "tweetstats", "tweetbytime", "mentions", "tweetbydate", "tweetbyid"
     };
 
     public static void main(String[] args) {
@@ -131,7 +131,53 @@ public class Main {
                     System.out.println("Input must be of the form: command handle numberOfTweets");
                     System.exit(-1);
                 }
-            } else {
+            } else if (args[0].equals(commands[5])) {
+                try {
+                    TweetStream ts = new TweetStream();
+                    ArrayList<String> statusStrs = new ArrayList<String >();
+                    // HERE
+                    try {
+                        // FileReader reads text files in the default encoding.
+                        FileReader fileReader =
+                                new FileReader(args[1]);
+
+                        // Always wrap FileReader in BufferedReader.
+                        BufferedReader bufferedReader =
+                                new BufferedReader(fileReader);
+// This will reference one line at a time
+                        String line = null;
+                        while((line = bufferedReader.readLine()) != null && line.length() > 0) {
+                            statusStrs.add(line);
+                        }
+
+                        // Always close files.
+                        bufferedReader.close();
+                    }
+                    catch(FileNotFoundException ex) {
+                        System.out.println("ERR: Unable to open file");
+                        System.exit(-1);
+                    }
+                    catch(IOException ex) {
+                        System.out.println(
+                                "ERR: Error reading file");
+                        // Or we could just do this:
+                        // ex.printStackTrace();
+                        System.exit(-1);
+                    }
+                    // HERE
+                    if(statusStrs.size() == 0) {
+                        System.out.println("ERR: List was empty");
+                        System.exit(-1);
+                    }
+                    JsonObject output = ts.getTweetStatsById(statusStrs);
+                    System.out.println("SUCCESS: " + output.toString());
+
+
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Input must be of the form: command handle numberOfTweets");
+                    System.exit(-1);
+                }
+            }else {
                 System.out.println("Please enter a valid command");
                 System.out.println("Commands must be in the form: command handle");
                 System.out.println("Possible commands:");

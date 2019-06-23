@@ -1,3 +1,4 @@
+import com.google.gson.JsonObject;
 import twitter4j.*;
 
 import java.text.ParseException;
@@ -226,6 +227,27 @@ public class TweetStream extends TwitterEntity{
 
 
         }
+    }
+
+    public JsonObject getTweetStatsById(List<String> ids) {
+        try{
+            int totalLikes = 0;
+            int totalRts = 0;
+            for(String idStr : ids) {
+                long id = Long.parseLong(idStr);
+                Status status = twitter.showStatus(id);
+                totalLikes += status.getFavoriteCount();
+                totalRts += status.getRetweetCount();
+            }
+            JsonObject output = new JsonObject();
+            output.addProperty("likes_count", totalLikes);
+            output.addProperty("rts_count", totalRts);
+            return output;
+        } catch (TwitterException te) {
+            te.printStackTrace();
+            return null;
+        }
+
     }
 }
 
