@@ -10,7 +10,7 @@ import java.io.*;
 
 public class Main {
     private static final String[] commands = {
-            "overview", "tweetstats", "tweetbytime", "mentions", "tweetbydate", "tweetbyid", "tracker"
+            "overview", "tweetstats", "tweetbytime", "mentions", "tweetbydate", "tracker"
     };
 
     private static final String[] arguments = {
@@ -101,7 +101,7 @@ public class Main {
                 }
             } else if (args[0].equals(commands[4])) {
                 try {
-                    List<Long> output = getTweetsByDate(args[1], args[2], args[3]);
+                    List<JsonObject> output = getTweetsByDate(args[1], args[2], args[3]);
 
                     if (output == null) {
                         System.out.println("Failed to get information for this handle");
@@ -109,8 +109,8 @@ public class Main {
                     } else {
                         try {
                             PrintWriter printWriter = new PrintWriter(args[4]);
-                            for (long status : output){
-                                printWriter.println(status);
+                            for (JsonObject status : output) {
+                                printWriter.println(status.toString());
                                 printWriter.flush();
                             }
                             System.out.flush();
@@ -128,54 +128,7 @@ public class Main {
                     System.out.println("Input must be of the form: command handle numberOfTweets");
                     System.exit(-1);
                 }
-            }
-            else if (args[0].equals(commands[5])) {
-                try {
-                    TweetStream ts = new TweetStream();
-                    ArrayList<String> statusStrs = new ArrayList<String >();
-                    // HERE
-                    try {
-                        // FileReader reads text files in the default encoding.
-                        FileReader fileReader =
-                                new FileReader(args[1]);
-
-                        // Always wrap FileReader in BufferedReader.
-                        BufferedReader bufferedReader =
-                                new BufferedReader(fileReader);
-// This will reference one line at a time
-                        String line = null;
-                        while((line = bufferedReader.readLine()) != null && line.length() > 0) {
-                            statusStrs.add(line);
-                        }
-
-                        // Always close files.
-                        bufferedReader.close();
-                    }
-                    catch(FileNotFoundException ex) {
-                        System.out.println("ERR: Unable to open file");
-                        System.exit(-1);
-                    }
-                    catch(IOException ex) {
-                        System.out.println(
-                                "ERR: Error reading file");
-                        // Or we could just do this:
-                        // ex.printStackTrace();
-                        System.exit(-1);
-                    }
-                    // HERE
-                    if(statusStrs.size() == 0) {
-                        System.out.println("ERR: List was empty");
-                        System.exit(-1);
-                    }
-                    JsonObject output = ts.getTweetStatsById(statusStrs);
-                    System.out.println("SUCCESS: " + output.toString());
-
-
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Input must be of the form: command handle numberOfTweets");
-                    System.exit(-1);
-                }
-            }else if (args[0].equals(commands[5])) {
+            } else if (args[0].equals(commands[5])) {
                 Tracker tracker = new Tracker();
                 try {
                     if (args[1].compareTo(arguments[0]) == 0) {
@@ -325,16 +278,24 @@ public class Main {
         }
     }
 
-    static private List<Long> getTweetsByDate(String handle, String startDateStr, String endDateStr) {
+    static private List<JsonObject> getTweetsByDate(String handle, String startDateStr, String endDateStr) {
         try {
             TweetStream tweetStream = new TweetStream(handle);
             List<Status> statuses = tweetStream.getTweetsByDate(startDateStr, endDateStr);
 
             if (statuses == null) return null;
             else {
-                ArrayList<Long> output = new ArrayList<Long>();
+                ArrayList<JsonObject> output = new ArrayList<JsonObject>();
                 for (Status status : statuses) {
-                    output.add(status.getId());
+                    JsonObject statusJson = new JsonObject();
+                    statusJson.addProperty("id", status.getId());
+                    statusJson.addProperty("text", status.getText());
+                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
+                    statusJson.addProperty("favourite_count", status.getFavoriteCount());
+                    statusJson.addProperty("rt_count", status.getRetweetCount());
+                    statusJson.addProperty("is_rt", status.isRetweet());
+
+                    output.add(statusJson);
                 }
                 return output;
             }

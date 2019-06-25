@@ -146,7 +146,6 @@ public class TweetStream extends TwitterEntity {
             }
 
 
-
             return mentionsRecord;
 
 
@@ -174,10 +173,9 @@ public class TweetStream extends TwitterEntity {
         }
 
         // HERE
-        if(user == null) return null;
+        if (user == null) return null;
         else {
             String handle = user.getScreenName();
-
 
 
             /** APPROACH:
@@ -203,15 +201,15 @@ public class TweetStream extends TwitterEntity {
                 while (true) {
                     paging = new Paging(i, 200);
                     page = twitter.getUserTimeline(handle, paging);
-                    int lastIndex = page.size()-1;
-                    if(page.get(lastIndex).getCreatedAt().compareTo(startDate) > 0) {
+                    int lastIndex = page.size() - 1;
+                    if (page.get(lastIndex).getCreatedAt().compareTo(startDate) > 0) {
                         statuses.addAll(page);
                         i++;
                     } else break;
                 }
 
-                for(Status status : page) {
-                    if(status.getCreatedAt().compareTo(startDate) > 0) statuses.add(status);
+                for (Status status : page) {
+                    if (status.getCreatedAt().compareTo(startDate) > 0) statuses.add(status);
                     else break;
                 }
                 return statuses;
@@ -221,30 +219,7 @@ public class TweetStream extends TwitterEntity {
                 System.out.println("Failed to get timeline: " + te.getMessage());
                 return null;
             }
-
-
         }
-    }
-
-    public JsonObject getTweetStatsById(List<String> ids) {
-        try{
-            int totalLikes = 0;
-            int totalRts = 0;
-            for(String idStr : ids) {
-                long id = Long.parseLong(idStr);
-                Status status = twitter.showStatus(id);
-                totalLikes += status.getFavoriteCount();
-                totalRts += status.getRetweetCount();
-            }
-            JsonObject output = new JsonObject();
-            output.addProperty("likes_count", totalLikes);
-            output.addProperty("rts_count", totalRts);
-            return output;
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            return null;
-        }
-
     }
 }
 
