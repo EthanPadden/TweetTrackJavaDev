@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
-public class TweetStream extends TwitterEntity{
+public class TweetStream extends TwitterEntity {
     private User user;
 
     public TweetStream() {
@@ -24,10 +24,10 @@ public class TweetStream extends TwitterEntity{
     }
 
     public List<Status> getTweets(int numTweets) {
-        if(user == null) return null;
+        if (user == null) return null;
         else {
             String handle = user.getScreenName();
-            Paging paging = new Paging(1,numTweets);
+            Paging paging = new Paging(1, numTweets);
             try {
                 List<Status> statuses = twitter.getUserTimeline(handle, paging);
                 return statuses;
@@ -40,26 +40,25 @@ public class TweetStream extends TwitterEntity{
     }
 
     public List<Status> getTweetsByTime(int numDays) {
-        if(user == null) return null;
+        if (user == null) return null;
         else {
             String handle = user.getScreenName();
 
             // Note - more paging for more than 200 tweets
-            Paging paging = new Paging(1,200);
+            Paging paging = new Paging(1, 200);
 
             try {
-                List<Status> statuses = twitter.getUserTimeline(handle,paging);
-                if(statuses.size() <= 1) return null;
+                List<Status> statuses = twitter.getUserTimeline(handle, paging);
+                if (statuses.size() <= 1) return null;
 
                 ArrayList<Status> output = new ArrayList<Status>();
                 Date date = new Date();
-                date.setDate(date.getDate()-numDays);
+                date.setDate(date.getDate() - numDays);
 
-                for(Status status : statuses) {
-                    if(status.getCreatedAt().compareTo(date) > 0){
+                for (Status status : statuses) {
+                    if (status.getCreatedAt().compareTo(date) > 0) {
                         output.add(status);
-                    }
-                    else {
+                    } else {
                         break;
                     }
                 }
@@ -81,7 +80,7 @@ public class TweetStream extends TwitterEntity{
             // Dates
             Date stepperDate = new Date();
             Date pastDate = new Date();
-            pastDate.setDate(stepperDate.getDate()-numDays);
+            pastDate.setDate(stepperDate.getDate() - numDays);
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String pastDateStr = format.format(pastDate);
             String stepperDateStr = format.format(stepperDate);
@@ -91,49 +90,47 @@ public class TweetStream extends TwitterEntity{
             query.setCount(100);
 
             try {
-
-                while(true) {
-
+                while (true) {
                     QueryResult result = twitter.search(query);
                     List<Status> batch = result.getTweets();
-                    if(batch.isEmpty()) break;
+                    if (batch.isEmpty()) break;
                     // Look at first and last tweet - compare dates
                     Status first = batch.get(0);
                     int size = batch.size();
-                    Status last = batch.get(size-1);
+                    Status last = batch.get(size - 1);
                     String fdate = format.format(first.getCreatedAt());
                     String ldate = format.format(last.getCreatedAt());
 
-                    if(fdate.compareTo(ldate) == 0) {
+                    if (fdate.compareTo(ldate) == 0) {
                         int currentVal = 0;
-                        if(mentionsRecord.get(stepperDateStr) != null) {
+                        if (mentionsRecord.get(stepperDateStr) != null) {
                             currentVal = mentionsRecord.get(stepperDateStr);
-                            mentionsRecord.put(stepperDateStr, currentVal+size);
+                            mentionsRecord.put(stepperDateStr, currentVal + size);
                         } else { // If there is no record yet
                             mentionsRecord.put(stepperDateStr, size);
                         }
                     } else {
                         // Loop through to hash dates
                         int i = 0;
-                        while (i < batch.size()){
-                            if(stepperDateStr.compareTo(format.format(batch.get(i).getCreatedAt())) == 0) {
+                        while (i < batch.size()) {
+                            if (stepperDateStr.compareTo(format.format(batch.get(i).getCreatedAt())) == 0) {
                                 int currentVal = 0;
-                                if(mentionsRecord.get(stepperDateStr) != null) {
+                                if (mentionsRecord.get(stepperDateStr) != null) {
                                     currentVal = mentionsRecord.get(stepperDateStr);
-                                    mentionsRecord.put(stepperDateStr, currentVal+1);
+                                    mentionsRecord.put(stepperDateStr, currentVal + 1);
                                 } else {
                                     mentionsRecord.put(stepperDateStr, 1);
                                 }
                                 i++;
                             } else {
-                                stepperDate.setDate(stepperDate.getDate()-1);
+                                stepperDate.setDate(stepperDate.getDate() - 1);
                                 stepperDateStr = format.format(stepperDate);
                             }
                         }
 
                     }
 
-                    if(result.hasNext())//there is more pages to load
+                    if (result.hasNext())//there is more pages to load
                     {
                         System.out.println("HAS NEXT: " + result.hasNext());
                         query = result.nextQuery();
