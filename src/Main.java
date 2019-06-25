@@ -9,14 +9,12 @@ import java.io.*;
 
 
 public class Main {
-    /**
-     * args[0] => The command for the data required
-     * args[1] => The Twitter handle
-     * args[2] => The number of tweets required
-     **/
-
     private static final String[] commands = {
-            "overview", "tweetstats", "tweetbytime", "mentions", "tweetbydate", "tweetbyid"
+            "overview", "tweetstats", "tweetbytime", "mentions", "tweetbydate", "tweetbyid", "tracker"
+    };
+
+    private static final String[] arguments = {
+            "init", "status"
     };
 
     public static void main(String[] args) {
@@ -54,7 +52,6 @@ public class Main {
 
                             System.exit(2);
                         }
-
                         System.exit(0);
                     }
                 } catch (IndexOutOfBoundsException e) {
@@ -131,7 +128,8 @@ public class Main {
                     System.out.println("Input must be of the form: command handle numberOfTweets");
                     System.exit(-1);
                 }
-            } else if (args[0].equals(commands[5])) {
+            }
+            else if (args[0].equals(commands[5])) {
                 try {
                     TweetStream ts = new TweetStream();
                     ArrayList<String> statusStrs = new ArrayList<String >();
@@ -177,7 +175,37 @@ public class Main {
                     System.out.println("Input must be of the form: command handle numberOfTweets");
                     System.exit(-1);
                 }
-            }else {
+            }else if (args[0].equals(commands[5])) {
+                Tracker tracker = new Tracker();
+                try {
+                    if (args[1].compareTo(arguments[0]) == 0) {
+
+                        boolean success = tracker.setUser(args[2]);
+                        if (success) {
+                            tracker.trackUserTweets();
+                            System.out.println("INIT_SIGNAL");
+                            Scanner in = new Scanner(System.in);
+                            String command = in.nextLine();
+                            if (command.compareTo("status") == 0) {
+                                System.out.println(tracker.isTracking());
+                            }
+
+                        } else {
+                            System.out.println("Failed to set up tracker");
+                        }
+
+                    } else if (args[1].compareTo(arguments[1]) == 0) {
+                        System.out.println(tracker.isTracking());
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println(args[1]);
+                    e.printStackTrace();
+                    System.out.println("Enter valid arguments");
+                    System.exit(-1);
+                }
+
+            } else {
+
                 System.out.println("Please enter a valid command");
                 System.out.println("Commands must be in the form: command handle");
                 System.out.println("Possible commands:");
@@ -185,6 +213,7 @@ public class Main {
                 System.exit(-1);
             }
         } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
             System.out.println("Enter input");
             System.exit(-1);
         }
