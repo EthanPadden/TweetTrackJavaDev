@@ -134,6 +134,7 @@ public class Main {
                     if (args[1].compareTo(arguments[0]) == 0) {
 
                         boolean success = tracker.setUser(args[2]);
+                        tracker.setFile(args[3]);
                         if (success) {
                             tracker.trackUserTweets();
                             System.out.println("INIT_SIGNAL");
