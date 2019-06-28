@@ -1,45 +1,20 @@
-{"user":"ZLustrea","tweet_id":1144590065743597568,"created_at":"Fri Jun 28 13:55:11 BST 2019","text":"@elonmusk HAPPY BIRTHDAY"}
-{"user":"Joker_Smok3r","tweet_id":1144590068243415040,"created_at":"Fri Jun 28 13:55:12 BST 2019","text":"@pewdiepie @elonmusk Happy birthday"}
-{"user":"BOvi_Chris","tweet_id":1144590068360740864,"created_at":"Fri Jun 28 13:55:12 BST 2019","text":"@elonmusk Happy birthday oh great leader"}
-{"user":"Nikhil_Shorya","tweet_id":1144590068843048961,"created_at":"Fri Jun 28 13:55:12 BST 2019","text":"@elonmusk Happy birthday @elonmusk"}
-{"user":"intrenchimfine","tweet_id":1144590071619891201,"created_at":"Fri Jun 28 13:55:13 BST 2019","text":"@elonmusk it's my birthday too dad"}
-{"user":"SmokingKhaji","tweet_id":1144590072932655109,"created_at":"Fri Jun 28 13:55:13 BST 2019","text":"@elonmusk  Happy B-day bro, never surrender by dream ,to make space real."}
-{"user":"smiley_bones","tweet_id":1144590075247976449,"created_at":"Fri Jun 28 13:55:14 BST 2019","text":"@pewdiepie @elonmusk Lol i thought that was for me! My birthday is tomorrow"}
-{"user":"owen_sparks2017","tweet_id":1144590081333833728,"created_at":"Fri Jun 28 13:55:15 BST 2019","text":"@elonmusk Happy Birthday Elon! Thanks for changing the world with your incredible company’s! 🎉🎉🎉🎉"}
-{"user":"johnntd","tweet_id":1144590082076073984,"created_at":"Fri Jun 28 13:55:15 BST 2019","text":"@elonmusk Happy birthday to the greatest man!"}
-{"user":"Nessiplier","tweet_id":1144590096383000576,"created_at":"Fri Jun 28 13:55:19 BST 2019","text":"@elonmusk Happy birthday!!! 🥳🎂🎉"}
-{"user":"RezyK25","tweet_id":1144590101902700545,"created_at":"Fri Jun 28 13:55:20 BST 2019","text":"@elonmusk Happy birthday you are an inspiration!"}
-{"user":"ebarr52","tweet_id":1144590113349021696,"created_at":"Fri Jun 28 13:55:23 BST 2019","text":"@elonmusk I wonder if there is a company out there that could do this better......"}
-{"user":"LightningLJS","tweet_id":1144590115970400256,"created_at":"Fri Jun 28 13:55:23 BST 2019","text":"@elonmusk happy birth"}
-{"user":"Pavnaj1","tweet_id":1144590116423262208,"created_at":"Fri Jun 28 13:55:23 BST 2019","text":"@Rowanyourell1 @pewdiepie @elonmusk He is not dead ,  just lost"}
-{"user":"thesnapper4","tweet_id":1144590120521277440,"created_at":"Fri Jun 28 13:55:24 BST 2019","text":"@humanchild01123 @elonmusk \"I'm glad you're born\""}
-{"user":"svndaze","tweet_id":1144590125986406400,"created_at":"Fri Jun 28 13:55:26 BST 2019","text":"@elonmusk Love u pal"}
-{"user":"miguelp02965581","tweet_id":1144590138824990721,"created_at":"Fri Jun 28 13:55:29 BST 2019","text":"@pewdiepie @elonmusk Holy shit, it’s my birthday today as well, thanks for Felix 😂"}
-{"user":"dannyboi22456","tweet_id":1144590139840184321,"created_at":"Fri Jun 28 13:55:29 BST 2019","text":"@elonmusk Happy birthday!! 🥳🎂 🎁"}
-{"user":"Nichola46689465","tweet_id":1144590142415482880,"created_at":"Fri Jun 28 13:55:30 BST 2019","text":"@elonmusk Happy birthday"}
-{"user":"SevinSMS","tweet_id":1144590146349613056,"created_at":"Fri Jun 28 13:55:31 BST 2019","text":"@elonmusk Happy birthday senpai 😌"}
-{"user":"n8buxton","tweet_id":1144590149722038277,"created_at":"Fri Jun 28 13:55:31 BST 2019","text":"Happy Birthday Tony Stark @elonmusk 🎉"}
-{"user":"amena_korobi","tweet_id":1144590155900170240,"created_at":"Fri Jun 28 13:55:33 BST 2019","text":"happy birthday @elonmusk and @markiplier and me"}
-{"user":"BirdringMyers","tweet_id":1144590156919386113,"created_at":"Fri Jun 28 13:55:33 BST 2019","text":"@elonmusk happy birthday space memelord"}
-{"user":"AllenJapan92","tweet_id":1144590160052535299,"created_at":"Fri Jun 28 13:55:34 BST 2019","text":"@elonmusk De nada dame 3000€"}
-{"user":"grumpykeef","tweet_id":1144590160400531456,"created_at":"Fri Jun 28 13:55:34 BST 2019","text":"@elonmusk happy birthday!!"}
-{"user":"squid161","tweet_id":1144590162602541056,"created_at":"Fri Jun 28 13:55:34 BST 2019","text":"@elonmusk Happy birthday"}
-{"user":"EdwinThePengu","tweet_id":1144590163194077185,"created_at":"Fri Jun 28 13:55:35 BST 2019","text":"Happy Birthday @elonmusk 🎺🎺"}
-{"user":"dilyarsm","tweet_id":1144590163424813056,"created_at":"Fri Jun 28 13:55:35 BST 2019","text":"@elonmusk Happy Birthday “Boss”."}
-{"user":"UARK_SoilTest","tweet_id":1144590164909596672,"created_at":"Fri Jun 28 13:55:35 BST 2019","text":"@dfaber84 @elonmusk With those resources and tax write offs- Seems like if you two actually worked together you could finish @ChipotleTweets once and for all... https://t.co/iHxInuxZi8"}
-{"user":"Kanishk01Yadav","tweet_id":1144590166549360641,"created_at":"Fri Jun 28 13:55:35 BST 2019","text":"@elonmusk Happy birthday bruh 🎂"}
-{"user":"Zulqhar9","tweet_id":1144590167459561472,"created_at":"Fri Jun 28 13:55:36 BST 2019","text":"@elonmusk https://t.co/bOkSaJ7MaQ"}
-{"user":"ajay_snehi","tweet_id":1144590171364573186,"created_at":"Fri Jun 28 13:55:36 BST 2019","text":"@pewdiepie @elonmusk I think \"eel on musk\" will reply with this 🙂 https://t.co/XzSDczgZOe"}
-{"user":"Rohat420","tweet_id":1144590172555812867,"created_at":"Fri Jun 28 13:55:37 BST 2019","text":"@pewdiepie @elonmusk Si"}
-{"user":"redd18__","tweet_id":1144590173554057217,"created_at":"Fri Jun 28 13:55:37 BST 2019","text":"@elonmusk Happy birthday!!!"}
-{"user":"_Feldsher","tweet_id":1144590183095926784,"created_at":"Fri Jun 28 13:55:39 BST 2019","text":"@pewdiepie @elonmusk I can't help but wonder what memes would Elon do next... For the meantime, my well wishes for you Elon."}
-{"user":"TSLATNA","tweet_id":1144590185096724480,"created_at":"Fri Jun 28 13:55:40 BST 2019","text":"@tesla_raj @elonmusk Very Nice Team!!! Happy Birthday @elonmusk Best wishes always 🥳 https://t.co/YQczqjuhwP"}
-{"user":"KreNix09","tweet_id":1144590193913212928,"created_at":"Fri Jun 28 13:55:42 BST 2019","text":"@mayemusk @elonmusk Sorry, but your son will go for a walk?"}
-{"user":"OfficiallyGT69","tweet_id":1144590197784535040,"created_at":"Fri Jun 28 13:55:43 BST 2019","text":"@elonmusk How about you give back a little bit and tell the people the truth about Mars"}
-{"user":"Virgil_JJBA","tweet_id":1144590204587651073,"created_at":"Fri Jun 28 13:55:44 BST 2019","text":"Today is the Cake Day of THE Legend\nHappy Birthday @elonmusk, you're THE Boss.\n\nP.S.: Still Waiting the Tesla's Stock Price Get Higher"}
-{"user":"_saamiir_","tweet_id":1144590205439160320,"created_at":"Fri Jun 28 13:55:45 BST 2019","text":"@mike_nelsons @Miaadell94 @Mferreira1808 @meynieux @eprof85 @Miclea14 @rickyberwick @elonmusk You know ir is fake, right?"}
-{"user":"JohnnaCrider1","tweet_id":1144590209989767168,"created_at":"Fri Jun 28 13:55:46 BST 2019","text":"@tesla_raj @elonmusk Never got a chance to send my video in so I'll do it here HAPPY BDAY ELON! https://t.co/avynGQZyCa"}
-{"user":"supdooooood","tweet_id":1144590211894194178,"created_at":"Fri Jun 28 13:55:46 BST 2019","text":"HAPPY BIRTHDAY ELON🥳🥳🥳🎈🎈 @elonmusk"}
-{"user":"LurkingTulip","tweet_id":1144590213152464898,"created_at":"Fri Jun 28 13:55:46 BST 2019","text":"@elonmusk Happy birthday my maaan!!!!"}
-{"user":"OgTroler","tweet_id":1144590213613793280,"created_at":"Fri Jun 28 13:55:47 BST 2019","text":"@ImaginaryBiBi Posted... \nhttps://t.co/wrfCtQW1yN"}
-{"user":"OgTroler","tweet_id":1144590217292242944,"created_at":"Fri Jun 28 13:55:47 BST 2019","text":"@SakarBataju Posted... \nhttps://t.co/HKoTLdG8D8"}
+{"user":"Pug1Zach","tweet_id":1144596372261416962,"created_at":"Fri Jun 28 14:20:15 BST 2019","text":"@elonmusk Happy birthday Elon!! Have a great one!"}
+{"user":"GoldenGaming379","tweet_id":1144596391194439680,"created_at":"Fri Jun 28 14:20:19 BST 2019","text":"@elonmusk @pewdiepie always wishes me happy birthday"}
+{"user":"myjoci","tweet_id":1144596392918339584,"created_at":"Fri Jun 28 14:20:20 BST 2019","text":"@elonmusk 🥳"}
+{"user":"MrLiamKelly","tweet_id":1144596393073487872,"created_at":"Fri Jun 28 14:20:20 BST 2019","text":"@SuperSaf @elonmusk Iron Musk!"}
+{"user":"Miigwanikwe","tweet_id":1144596392234692608,"created_at":"Fri Jun 28 14:20:20 BST 2019","text":"#HBD @elonmusk Heard you saved the world by inventing a car...Using just water...#environment https://t.co/gOJ0zZZycs"}
+{"user":"spacexIaunch","tweet_id":1144596393476153349,"created_at":"Fri Jun 28 14:20:20 BST 2019","text":"@thanosisthehero @elonmusk wish elon a happy birthday now"}
+{"user":"surukayo","tweet_id":1144596400400998400,"created_at":"Fri Jun 28 14:20:22 BST 2019","text":"@elonmusk Happy BD! 🎉🎉🎉"}
+{"user":"kaliappank","tweet_id":1144596405060636672,"created_at":"Fri Jun 28 14:20:23 BST 2019","text":"@elonmusk Whatever said and done .... you are true visionary who didn’t flinch to think beyond the normal... #innovation that could transform human lives ... has been your motto ... you made the world notice it... and you have inspired millions around the world #HBD"}
+{"user":"Juan_Rodd","tweet_id":1144596412073746432,"created_at":"Fri Jun 28 14:20:24 BST 2019","text":"@elonmusk Happy freaking birthday Elon 😤"}
+{"user":"pogojoe2011","tweet_id":1144596412287639552,"created_at":"Fri Jun 28 14:20:24 BST 2019","text":"@elonmusk @Erdayastronaut @Tesla https://t.co/jAF9OQTKAW"}
+{"user":"monkmoshpit","tweet_id":1144596409926053888,"created_at":"Fri Jun 28 14:20:24 BST 2019","text":"@elonmusk Happy birthday we luv u ❤️"}
+{"user":"ostyn_heisss","tweet_id":1144596414946787328,"created_at":"Fri Jun 28 14:20:25 BST 2019","text":"@elonmusk Happy birthday to the best Martian ever!👽"}
+{"user":"bat_maaz","tweet_id":1144596418960732160,"created_at":"Fri Jun 28 14:20:26 BST 2019","text":"Yo @elonmusk, The God of Technology\n \nFund my trip to Turkey pls."}
+{"user":"adenis890","tweet_id":1144596424191090688,"created_at":"Fri Jun 28 14:20:27 BST 2019","text":"@elonmusk Happy big birth big earth man!"}
+{"user":"flimgleTead","tweet_id":1144596425726201856,"created_at":"Fri Jun 28 14:20:28 BST 2019","text":"@elonmusk Happy birthday"}
+{"user":"Entyarr","tweet_id":1144596429102563328,"created_at":"Fri Jun 28 14:20:28 BST 2019","text":"@elonmusk Happy birthday daddy Elon! 🎂🎂"}
+{"user":"OrRavid2002","tweet_id":1144596434651684866,"created_at":"Fri Jun 28 14:20:30 BST 2019","text":"@elonmusk Love from Or Ravid in Eilat"}
+{"user":"HypnoticGD","tweet_id":1144596437789020160,"created_at":"Fri Jun 28 14:20:30 BST 2019","text":"@elonmusk Happy Birthday 🎂 and in 2 Days i have my Birthday https://t.co/CIg981iPy0"}
+{"user":"galbute","tweet_id":1144596440758542338,"created_at":"Fri Jun 28 14:20:31 BST 2019","text":"@elonmusk Hpmm ticker symbol is a great winner"}
+{"user":"mcfarland_co","tweet_id":1144596441534308352,"created_at":"Fri Jun 28 14:20:31 BST 2019","text":"@elonmusk Feliz Cumpleaños Elon!!"}

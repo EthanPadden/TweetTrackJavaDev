@@ -137,12 +137,8 @@ public class Main {
                         tracker.setFile(args[3]);
                         if (success) {
                             tracker.trackUserTweets();
-                            System.out.println("INIT_SIGNAL");
                             Scanner in = new Scanner(System.in);
-                            String command = in.nextLine();
-                            if (command.compareTo("status") == 0) {
-                                System.out.println(tracker.isTracking());
-                            }
+
 
                         } else {
                             System.out.println("Failed to set up tracker");

@@ -3,12 +3,16 @@ import twitter4j.*;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.Time;
 import java.util.Scanner;
+import java.util.Timer;
 
 public class Tracker {
     private User user;
     private boolean isTracking;
     private PrintWriter printWriter;
+    private PrintWriter msgWriter;
+    private static String defMsgFile = "trackermsg.txt";
 //        PrintWriter printWriter = new PrintWriter(args[3]);
 //        for (JsonObject statusJson : output) {
 //
@@ -18,6 +22,10 @@ public class Tracker {
 //                        System.exit(
     public Tracker() {
         isTracking = false;
+        try {msgWriter = new PrintWriter(defMsgFile);}
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public Tracker(String userName, String outputfile) {
@@ -54,7 +62,9 @@ public class Tracker {
         if (user == null) System.out.println("Cannot find user");
         else {
             // NOT FILTERED
-
+            StatusOutput statusOutput = new StatusOutput();
+            Timer timer = new Timer();
+            timer.scheduleAtFixedRate(statusOutput, 1000, 60000);
             TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
             StatusListener listener = new StatusListener() {
                 @Override
