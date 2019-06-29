@@ -138,6 +138,23 @@ public class Main {
                         if (success) {
                             tracker.trackUserTweets();
                             Scanner in = new Scanner(System.in);
+                            PrintWriter pw;
+                            try {
+                                pw = new PrintWriter("trackermsg.txt");
+                                while (tracker.isTracking()) {
+                                    String cmd = in.nextLine();
+
+                                    if(cmd.compareTo("stop") == 0) {
+                                        pw.println("Tracker stopped at: " + new Date().toString());
+                                        tracker.shutDown();
+                                    }
+                                }
+                            }
+                            catch(FileNotFoundException e){
+                                e.printStackTrace();
+                                tracker.shutDown();
+
+                            }
 
 
                         } else {

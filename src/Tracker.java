@@ -13,6 +13,7 @@ public class Tracker {
     private PrintWriter printWriter;
     private PrintWriter msgWriter;
     private static String defMsgFile = "trackermsg.txt";
+    private TwitterStream twitterStream;
 //        PrintWriter printWriter = new PrintWriter(args[3]);
 //        for (JsonObject statusJson : output) {
 //
@@ -26,6 +27,7 @@ public class Tracker {
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        twitterStream = new TwitterStreamFactory().getInstance();
     }
 
     public Tracker(String userName, String outputfile) {
@@ -65,7 +67,6 @@ public class Tracker {
             StatusOutput statusOutput = new StatusOutput();
             Timer timer = new Timer();
             timer.scheduleAtFixedRate(statusOutput, 1000, 60000);
-            TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
             StatusListener listener = new StatusListener() {
                 @Override
                 public void onStatus(Status status) {
@@ -132,5 +133,10 @@ public class Tracker {
             return false;
         }
         return true;
+    }
+
+    public void shutDown() {
+        twitterStream.shutdown();
+        System.exit(0);
     }
 }

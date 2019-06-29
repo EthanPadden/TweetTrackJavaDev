@@ -25,6 +25,7 @@ public class StatusOutput extends TimerTask {
     public void run() {
 //        try {
         printWriter.println("Alive at: " + new Date().toString());
+        System.out.println("Alive at: " + new Date().toString());
         printWriter.flush();
 
         //assuming it takes 10 secs to complete the task
