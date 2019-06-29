@@ -172,7 +172,10 @@ public class Main {
                 }
 
             } else {
-
+Transporter transporter = new Transporter("src/mongoCredentials.json");
+transporter.testWrite();
+//WriteResult output:
+//                { "serverUsed" : "danu7.it.nuigalway.ie:8717" , "ok" : 1 , "n" : 0}
 //
 //                System.out.println("Please enter a valid command");
 //                System.out.println("Commands must be in the form: command handle");
