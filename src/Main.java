@@ -173,11 +173,12 @@ public class Main {
 
             } else {
 
-                System.out.println("Please enter a valid command");
-                System.out.println("Commands must be in the form: command handle");
-                System.out.println("Possible commands:");
-                for (String command : commands) System.out.println(command);
-                System.exit(-1);
+//
+//                System.out.println("Please enter a valid command");
+//                System.out.println("Commands must be in the form: command handle");
+//                System.out.println("Possible commands:");
+//                for (String command : commands) System.out.println(command);
+//                System.exit(-1);
             }
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();

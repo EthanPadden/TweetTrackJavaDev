@@ -14,6 +14,7 @@ public class Tracker {
     private PrintWriter msgWriter;
     private static String defMsgFile = "trackermsg.txt";
     private TwitterStream twitterStream;
+    private Transporter transporter;
 //        PrintWriter printWriter = new PrintWriter(args[3]);
 //        for (JsonObject statusJson : output) {
 //
@@ -22,6 +23,7 @@ public class Tracker {
 //    }
 //                        System.exit(
     public Tracker() {
+        transporter = new Transporter("src/mongoCredentials.json");
         isTracking = false;
         try {msgWriter = new PrintWriter(defMsgFile);}
         catch (FileNotFoundException e) {
