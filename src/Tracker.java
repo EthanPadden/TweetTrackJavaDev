@@ -10,8 +10,6 @@ import java.util.Timer;
 public class Tracker {
     private User user;
     private boolean isTracking;
-    private PrintWriter printWriter;
-    private PrintWriter msgWriter;
     private static String defMsgFile = "trackermsg.txt";
     private TwitterStream twitterStream;
     private Transporter transporter;
@@ -25,10 +23,6 @@ public class Tracker {
     public Tracker() {
         transporter = new Transporter("src/mongoCredentials.json");
         isTracking = false;
-        try {msgWriter = new PrintWriter(defMsgFile);}
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
         twitterStream = new TwitterStreamFactory().getInstance();
     }
 
@@ -39,26 +33,6 @@ public class Tracker {
         user = account.verifyAccount();
         if (user == null) {
             System.out.println("Could not set up tracker - user does not exist");
-        }
-        try{
-
-        printWriter= new PrintWriter(outputfile);
-
-        } catch (
-        FileNotFoundException e) {
-        System.out.println("File not found to store tweets");
-        System.out.println("FAILURE");
-
-        System.exit(2);
-        }
-    }
-
-    public void setFile(String filename) {
-        try {
-            printWriter = new PrintWriter(filename);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -78,8 +52,7 @@ public class Tracker {
                         statusJson.addProperty("tweet_id", status.getId());
                         statusJson.addProperty("created_at", status.getCreatedAt().toString());
                         statusJson.addProperty("text", status.getText());
-                        printWriter.println(statusJson.toString());
-                        printWriter.flush();
+                 
                     }
 
                 }
