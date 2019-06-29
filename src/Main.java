@@ -134,7 +134,6 @@ public class Main {
                     if (args[1].compareTo(arguments[0]) == 0) {
 
                         boolean success = tracker.setUser(args[2]);
-                        tracker.setFile(args[3]);
                         if (success) {
                             tracker.trackUserTweets();
                             Scanner in = new Scanner(System.in);
@@ -172,8 +171,6 @@ public class Main {
                 }
 
             } else {
-Transporter transporter = new Transporter("src/mongoCredentials.json");
-transporter.testWrite();
 //WriteResult output:
 //                { "serverUsed" : "danu7.it.nuigalway.ie:8717" , "ok" : 1 , "n" : 0}
 //

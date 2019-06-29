@@ -1,4 +1,7 @@
 import com.google.gson.JsonObject;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
 import twitter4j.*;
 
 import java.io.FileNotFoundException;
@@ -47,12 +50,7 @@ public class Tracker {
                 @Override
                 public void onStatus(Status status) {
                     if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
-                        JsonObject statusJson = new JsonObject();
-                        statusJson.addProperty("user", status.getUser().getScreenName());
-                        statusJson.addProperty("tweet_id", status.getId());
-                        statusJson.addProperty("created_at", status.getCreatedAt().toString());
-                        statusJson.addProperty("text", status.getText());
-                 
+                        transporter.writeToDb(status, user.getScreenName());
                     }
 
                 }

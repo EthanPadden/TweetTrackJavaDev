@@ -3,6 +3,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.mongodb.*;
+import twitter4j.Status;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,6 +15,7 @@ public class Transporter {
     private MongoClient mongoClient;
     private DB db;
     private DBCollection dbCollection;
+    JsonParser jsonParser;
 
     public Transporter(String fileName) {
         try {
@@ -22,6 +24,7 @@ public class Transporter {
             ex.printStackTrace();
         }
         setCredentials();
+        jsonParser = new JsonParser();
     }
 
     private void setCredentials() {
@@ -53,19 +56,17 @@ public class Transporter {
         }
     }
 
-    public void transportToDB() {
+    public boolean writeToDb(Status status, String handle) {
+        DBObject mention = new BasicDBObject("handle", handle)
+                .append("tweeting_user", status.getUser().getScreenName())
+                .append("tweet_id", status.getId())
+                .append("created_at", status.getCreatedAt().toString())
+                .append("text", status.getText());
 
-
-    }
-
-    public void testWrite() {
-        DBObject mention = new BasicDBObject("_id", "jo")
-                .append("name", "Jo Bloggs")
-                .append("address", new BasicDBObject("street", "123 Fake St")
-                        .append("city", "Faketon")
-                        .append("state", "MA")
-                        .append("zip", 12345));
         WriteResult w  = dbCollection.insert(mention);
-        System.out.println(w.toString());
+        JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
+        Number ok = result.get("ok").getAsNumber();
+        int okInt = ok.intValue();
+        return (okInt == 1);
     }
 }
