@@ -33,7 +33,8 @@ public class Transporter {
         jsonParser = new JsonParser();
         this.tracker = tracker;
         setCredentials();
-        saveTrackerToDB();
+        boolean saved = saveTrackerToDB();
+        if(saved) System.out.println("ID: " + trackerId);
     }
 
     private boolean saveTrackerToDB() {
