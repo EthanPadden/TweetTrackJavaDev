@@ -56,7 +56,6 @@ public class Transporter {
                 fileContent += line;
             }
             bufferedReader.close();
-            System.out.println(fileContent);
             JsonElement creds = jsonParser.parse(fileContent);
             JsonObject credsObj = creds.getAsJsonObject();
             String userName = credsObj.get("user_name").getAsString();

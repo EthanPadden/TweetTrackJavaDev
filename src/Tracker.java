@@ -36,9 +36,9 @@ public class Tracker {
         if (user == null) System.out.println("Cannot find user");
         else {
             // NOT FILTERED
-            StatusOutput statusOutput = new StatusOutput();
-            Timer timer = new Timer();
-            timer.scheduleAtFixedRate(statusOutput, 1000, 60000);
+//            StatusOutput statusOutput = new StatusOutput();
+//            Timer timer = new Timer();
+//            timer.scheduleAtFixedRate(statusOutput, 1000, 60000);
             StatusListener listener = new StatusListener() {
                 @Override
                 public void onStatus(Status status) {
