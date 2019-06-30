@@ -134,7 +134,6 @@ public class Main {
                     if (args[1].compareTo(arguments[0]) == 0) {
 
                         boolean success = tracker.setUser(args[2]);
-                        tracker.setFile(args[3]);
                         if (success) {
                             tracker.trackUserTweets();
                             Scanner in = new Scanner(System.in);
@@ -172,12 +171,14 @@ public class Main {
                 }
 
             } else {
-
-                System.out.println("Please enter a valid command");
-                System.out.println("Commands must be in the form: command handle");
-                System.out.println("Possible commands:");
-                for (String command : commands) System.out.println(command);
-                System.exit(-1);
+//WriteResult output:
+//                { "serverUsed" : "danu7.it.nuigalway.ie:8717" , "ok" : 1 , "n" : 0}
+//
+//                System.out.println("Please enter a valid command");
+//                System.out.println("Commands must be in the form: command handle");
+//                System.out.println("Possible commands:");
+//                for (String command : commands) System.out.println(command);
+//                System.exit(-1);
             }
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
