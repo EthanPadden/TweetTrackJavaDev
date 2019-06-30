@@ -16,26 +16,19 @@ public class Tracker {
     private static String defMsgFile = "trackermsg.txt";
     private TwitterStream twitterStream;
     private Transporter transporter;
-//        PrintWriter printWriter = new PrintWriter(args[3]);
-//        for (JsonObject statusJson : output) {
-//
-//        }
-//        System.out.println("SUCCESS");
-//    }
-//                        System.exit(
-    public Tracker() {
-        transporter = new Transporter("src/mongoCredentials.json");
-        isTracking = false;
-        twitterStream = new TwitterStreamFactory().getInstance();
-    }
 
-    public Tracker(String userName, String outputfile) {
-        this();
+
+    public Tracker(String userName) {
         Account account = new Account(userName);
         // May be null
         user = account.verifyAccount();
         if (user == null) {
             System.out.println("Could not set up tracker - user does not exist");
+            System.exit(-1);
+        } else {
+            transporter = new Transporter(this);
+            isTracking = false;
+            twitterStream = new TwitterStreamFactory().getInstance();
         }
     }
 
@@ -50,15 +43,18 @@ public class Tracker {
                 @Override
                 public void onStatus(Status status) {
                     if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
-                        transporter.writeToDb(status, user.getScreenName());
-                    }
+                        transporter.writeToDb(status, false);
 
+                    } else if(status.getUser().getScreenName().compareTo(user.getScreenName()) == 0){
+                        transporter.writeToDb(status, true);
+                    }
                 }
 
                 @Override
                 public void onException(Exception e) {
                     System.out.println("StatusListener Exception:");
                     e.printStackTrace();
+                    isTracking = false;
                 }
 
                 public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
@@ -88,7 +84,6 @@ public class Tracker {
             twitterStream.cleanUp();
             // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
             twitterStream.sample();
-            isTracking = true;
         }
 
     }
@@ -97,19 +92,12 @@ public class Tracker {
         return isTracking;
     }
 
-    public boolean setUser(String userName) {
-        Account account = new Account(userName);
-        // May be null
-        user = account.verifyAccount();
-        if (user == null) {
-            System.out.println("Could not set up tracker - user does not exist");
-            return false;
-        }
-        return true;
+
+    public User getUser() {
+        return user;
     }
 
-    public void shutDown() {
-        twitterStream.shutdown();
-        System.exit(0);
+    public void setTracking(boolean tracking) {
+        isTracking = tracking;
     }
 }

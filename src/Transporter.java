@@ -1,7 +1,6 @@
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import com.mongodb.*;
 import twitter4j.Status;
 
@@ -9,22 +8,43 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Date;
 
 public class Transporter {
     private FileReader fileReader;
     private MongoClient mongoClient;
     private DB db;
-    private DBCollection dbCollection;
+    private DBCollection mentions;
+    private DBCollection trackers;
+    private DBCollection tweets;
     JsonParser jsonParser;
+    private Tracker tracker;
+    private String trackerId;
+    private static String CREDS_FILE = "src/mongoCredentials.json";
 
-    public Transporter(String fileName) {
+
+    public Transporter(Tracker tracker) {
+        // File that stored credentials
         try {
-            fileReader = new FileReader(fileName);
+            fileReader = new FileReader(CREDS_FILE);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
-        setCredentials();
         jsonParser = new JsonParser();
+        this.tracker = tracker;
+        setCredentials();
+        saveTrackerToDB();
+    }
+
+    private boolean saveTrackerToDB() {
+        DBObject doc = new BasicDBObject("start_date", new Date().toString())
+                .append("handle", tracker.getUser().getScreenName());
+        WriteResult w  = trackers.insert(doc);
+        trackerId = ((BasicDBObject) doc).get("_id").toString();
+        JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
+        Number ok = result.get("ok").getAsNumber();
+        int okInt = ok.intValue();
+        return (okInt == 1);
     }
 
     private void setCredentials() {
@@ -37,7 +57,6 @@ public class Transporter {
             }
             bufferedReader.close();
             System.out.println(fileContent);
-            JsonParser jsonParser = new JsonParser();
             JsonElement creds = jsonParser.parse(fileContent);
             JsonObject credsObj = creds.getAsJsonObject();
             String userName = credsObj.get("user_name").getAsString();
@@ -49,22 +68,40 @@ public class Transporter {
             String clientArgs = "mongodb://" + userName + ":" + psw + "@" + host + ":" + port + "/" + database;
             mongoClient = new MongoClient(new MongoClientURI(clientArgs));
             db = mongoClient.getDB(database);
-            dbCollection = db.getCollection("mentions");
+            mentions = db.getCollection("mentions");
+            trackers = db.getCollection("trackers");
+            tweets = db.getCollection("tweets");
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    public boolean writeToDb(Status status, String handle) {
-        DBObject mention = new BasicDBObject("handle", handle)
-                .append("tweeting_user", status.getUser().getScreenName())
-                .append("tweet_id", status.getId())
-                .append("created_at", status.getCreatedAt().toString())
-                .append("text", status.getText());
+    public boolean writeToDb(Status status, boolean isFromTrackedAccount) {
+        DBObject tweet;
+        WriteResult writeResult;
+        if(isFromTrackedAccount) {
+            tweet = new BasicDBObject("handle", tracker.getUser().getScreenName())
+                    .append("tracker_id", trackerId)
+                    .append("tweet_id", status.getId())
+                    .append("created_at", status.getCreatedAt().toString())
+                    .append("text", status.getText())
+                    .append("favourite_count", status.getFavoriteCount())
+                    .append("rt_count", status.getRetweetCount())
+                    .append("is_rt", status.isRetweet());
+            writeResult  = tweets.insert(tweet);
 
-        WriteResult w  = dbCollection.insert(mention);
-        JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
+        } else {
+            tweet = new BasicDBObject("handle", tracker.getUser().getScreenName())
+                    .append("tracker_id", trackerId)
+                    .append("tweeting_user", status.getUser().getScreenName())
+                    .append("tweet_id", status.getId())
+                    .append("created_at", status.getCreatedAt().toString())
+                    .append("text", status.getText());
+            writeResult  = mentions.insert(tweet);
+
+        }
+        JsonObject result = jsonParser.parse(writeResult.toString()).getAsJsonObject();
         Number ok = result.get("ok").getAsNumber();
         int okInt = ok.intValue();
         return (okInt == 1);

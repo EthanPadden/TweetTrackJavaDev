@@ -13,10 +13,6 @@ public class Main {
             "overview", "tweetstats", "tweetbytime", "mentions", "tweetbydate", "tracker"
     };
 
-    private static final String[] arguments = {
-            "init", "status"
-    };
-
     public static void main(String[] args) {
         try {
             if (args[0].equals(commands[0])) {
@@ -129,56 +125,18 @@ public class Main {
                     System.exit(-1);
                 }
             } else if (args[0].equals(commands[5])) {
-                Tracker tracker = new Tracker();
-                try {
-                    if (args[1].compareTo(arguments[0]) == 0) {
+                // tracker handle
 
-                        boolean success = tracker.setUser(args[2]);
-                        if (success) {
-                            tracker.trackUserTweets();
-                            Scanner in = new Scanner(System.in);
-                            PrintWriter pw;
-                            try {
-                                pw = new PrintWriter("trackermsg.txt");
-                                while (tracker.isTracking()) {
-                                    String cmd = in.nextLine();
-
-                                    if(cmd.compareTo("stop") == 0) {
-                                        pw.println("Tracker stopped at: " + new Date().toString());
-                                        tracker.shutDown();
-                                    }
-                                }
-                            }
-                            catch(FileNotFoundException e){
-                                e.printStackTrace();
-                                tracker.shutDown();
-
-                            }
-
-
-                        } else {
-                            System.out.println("Failed to set up tracker");
-                        }
-
-                    } else if (args[1].compareTo(arguments[1]) == 0) {
-                        System.out.println(tracker.isTracking());
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println(args[1]);
-                    e.printStackTrace();
-                    System.out.println("Enter valid arguments");
-                    System.exit(-1);
-                }
-
+                Tracker tracker = new Tracker(args[1]);
+                tracker.setTracking(true);
+                tracker.trackUserTweets();
+                while(tracker.isTracking()) {}
             } else {
-//WriteResult output:
-//                { "serverUsed" : "danu7.it.nuigalway.ie:8717" , "ok" : 1 , "n" : 0}
-//
-//                System.out.println("Please enter a valid command");
-//                System.out.println("Commands must be in the form: command handle");
-//                System.out.println("Possible commands:");
-//                for (String command : commands) System.out.println(command);
-//                System.exit(-1);
+                System.out.println("Please enter a valid command");
+                System.out.println("Commands must be in the form: command handle");
+                System.out.println("Possible commands:");
+                for (String command : commands) System.out.println(command);
+                System.exit(-1);
             }
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
