@@ -23,6 +23,10 @@ public class Transporter {
     private static String CREDS_FILE = "src/mongoCredentials.json";
 
 
+    public String getTrackerId() {
+        return trackerId;
+    }
+
     public Transporter(Tracker tracker) {
         // File that stored credentials
         try {

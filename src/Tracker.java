@@ -17,6 +17,9 @@ public class Tracker {
     private TwitterStream twitterStream;
     private Transporter transporter;
 
+    public Transporter getTransporter() {
+        return transporter;
+    }
 
     public Tracker(String userName) {
         Account account = new Account(userName);
