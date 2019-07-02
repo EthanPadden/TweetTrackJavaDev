@@ -126,6 +126,7 @@ public class Main {
                 }
             } else if (args[0].equals(commands[5])) {
                 // tracker handle
+                System.out.println("START_SIGNAL");
 
                 Tracker tracker = new Tracker(args[1]);
                 tracker.setTracking(true);
