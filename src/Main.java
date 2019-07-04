@@ -1,9 +1,11 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.bson.types.ObjectId;
 import twitter4j.*;
 import twitter4j.json.DataObjectFactory;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.io.*;
 
@@ -126,8 +128,17 @@ public class Main {
                 }
             } else if (args[0].equals(commands[5])) {
                 // tracker handle
+                System.out.println("START_SIGNAL");
 
                 Tracker tracker = new Tracker(args[1]);
+                try {
+                    PrintWriter printWriter = new PrintWriter("trackerid.txt");
+                    printWriter.println("ID:" + tracker.getTransporter().getTrackerId());
+                    printWriter.flush();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
                 tracker.setTracking(true);
                 tracker.trackUserTweets();
                 while(tracker.isTracking()) {}
@@ -170,7 +181,9 @@ public class Main {
             return false;
         }
     }
-
+    public String toHex(String arg) {
+        return String.format("%040x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
+    }
     static private boolean getBasicInfo(String handle) {
         Account account = new Account(handle);
         User user = account.verifyAccount();

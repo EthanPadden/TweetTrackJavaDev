@@ -23,6 +23,10 @@ public class Transporter {
     private static String CREDS_FILE = "src/mongoCredentials.json";
 
 
+    public String getTrackerId() {
+        return trackerId;
+    }
+
     public Transporter(Tracker tracker) {
         // File that stored credentials
         try {
@@ -33,7 +37,8 @@ public class Transporter {
         jsonParser = new JsonParser();
         this.tracker = tracker;
         setCredentials();
-        saveTrackerToDB();
+        boolean saved = saveTrackerToDB();
+        if(saved) System.out.println("ID: " + trackerId);
     }
 
     private boolean saveTrackerToDB() {
@@ -56,7 +61,6 @@ public class Transporter {
                 fileContent += line;
             }
             bufferedReader.close();
-            System.out.println(fileContent);
             JsonElement creds = jsonParser.parse(fileContent);
             JsonObject credsObj = creds.getAsJsonObject();
             String userName = credsObj.get("user_name").getAsString();
