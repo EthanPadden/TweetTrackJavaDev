@@ -127,21 +127,23 @@ public class Main {
                     System.exit(-1);
                 }
             } else if (args[0].equals(commands[5])) {
-                // tracker handle
-                System.out.println("START_SIGNAL");
-
-                Tracker tracker = new Tracker(args[1]);
-                try {
-                    PrintWriter printWriter = new PrintWriter("trackerid.txt");
-                    printWriter.println("ID:" + tracker.getTransporter().getTrackerId());
-                    printWriter.flush();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-                tracker.setTracking(true);
-                tracker.trackUserTweets();
-                while(tracker.isTracking()) {}
+//                // tracker handle
+//                System.out.println("START_SIGNAL");
+//
+//                Tracker tracker = new Tracker(args[1]);
+//                try {
+//                    PrintWriter printWriter = new PrintWriter("trackerid.txt");
+//                    printWriter.println("ID:" + tracker.getTransporter().getTrackerId());
+//                    printWriter.flush();
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                tracker.setTracking(true);
+//                tracker.trackUserTweets();
+//                while(tracker.isTracking()) {}
+                Transporter t = new Transporter(new Tracker("elonmusk"));
+                t.updateTweetStats();
             } else {
                 System.out.println("Please enter a valid command");
                 System.out.println("Commands must be in the form: command handle");

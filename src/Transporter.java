@@ -8,7 +8,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Transporter {
     private FileReader fileReader;
@@ -78,6 +80,23 @@ public class Transporter {
                         new BasicDBObject().append("mentions_count", 99));
 
         stats.update(new BasicDBObject().append("tracker_id", trackerId), newDocument);
+    }
+
+    public void updateTweetStats() {
+        BasicDBObject inQuery = new BasicDBObject();
+        inQuery.put("tracker_id", "5d1cbada85942e436ee7b648");
+
+        DBCursor cursor = tweets.find(inQuery);
+        JsonParser jsonParser = new JsonParser();
+        List<Long> statusIDs = new ArrayList<Long>();
+
+        while(cursor.hasNext()) {
+            JsonElement statusJSON = jsonParser.parse(cursor.next().toString());
+            JsonObject statusObj = statusJSON.getAsJsonObject();
+            long id = statusObj.get("tweet_id").getAsLong();
+            statusIDs.add(id);
+        }
+
     }
     private void setCredentials() {
         try {

@@ -7,6 +7,7 @@ import twitter4j.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.Time;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 
@@ -95,6 +96,10 @@ public class Tracker {
         return isTracking;
     }
 
+    private void calculateStats(List<Long> statusIDs){
+        // Updates stats and tweets collections
+        
+    }
 
     public User getUser() {
         return user;
