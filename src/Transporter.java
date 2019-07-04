@@ -17,6 +17,7 @@ public class Transporter {
     private DBCollection mentions;
     private DBCollection trackers;
     private DBCollection tweets;
+    private DBCollection stats;
     JsonParser jsonParser;
     private Tracker tracker;
     private String trackerId;
@@ -38,7 +39,10 @@ public class Transporter {
         this.tracker = tracker;
         setCredentials();
         boolean saved = saveTrackerToDB();
-        if(saved) System.out.println("ID: " + trackerId);
+        if(saved) {
+            System.out.println("ID: " + trackerId);
+            initStatsRecord();
+        }
     }
 
     private boolean saveTrackerToDB() {
@@ -51,6 +55,18 @@ public class Transporter {
         int okInt = ok.intValue();
         return (okInt == 1);
     }
+
+    private boolean initStatsRecord() {
+        DBObject doc = new BasicDBObject("last_updated", new Date().toString())
+                .append("handle", tracker.getUser().getScreenName())
+                .append("tracker_id", trackerId);
+        WriteResult w  = stats.insert(doc);
+        JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
+        Number ok = result.get("ok").getAsNumber();
+        int okInt = ok.intValue();
+        return (okInt == 1);
+    }
+
 
     private void setCredentials() {
         try {
@@ -72,9 +88,10 @@ public class Transporter {
             String clientArgs = "mongodb://" + userName + ":" + psw + "@" + host + ":" + port + "/" + database;
             mongoClient = new MongoClient(new MongoClientURI(clientArgs));
             db = mongoClient.getDB(database);
-            mentions = db.getCollection("mentions");
             trackers = db.getCollection("trackers");
+            mentions = db.getCollection("mentions");
             tweets = db.getCollection("tweets");
+            stats = db.getCollection("stats");
 
         } catch (IOException ex) {
             ex.printStackTrace();
