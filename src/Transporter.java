@@ -59,7 +59,11 @@ public class Transporter {
     private boolean initStatsRecord() {
         DBObject doc = new BasicDBObject("last_updated", new Date().toString())
                 .append("handle", tracker.getUser().getScreenName())
-                .append("tracker_id", trackerId);
+                .append("tracker_id", trackerId)
+                .append("tweet_count", 0)
+                .append("mentions_count", 0)
+                .append("likes_count", 0)
+                .append("rt_count", 0);
         WriteResult w  = stats.insert(doc);
         JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
         Number ok = result.get("ok").getAsNumber();
@@ -67,7 +71,14 @@ public class Transporter {
         return (okInt == 1);
     }
 
+    public void updateMentions() {
+        // Does not update last_updated
+        BasicDBObject newDocument =
+                new BasicDBObject().append("$inc",
+                        new BasicDBObject().append("mentions_count", 99));
 
+        stats.update(new BasicDBObject().append("tracker_id", trackerId), newDocument);
+    }
     private void setCredentials() {
         try {
             BufferedReader bufferedReader = new BufferedReader(fileReader);

@@ -47,7 +47,7 @@ public class Tracker {
                 public void onStatus(Status status) {
                     if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
                         transporter.writeToDb(status, false);
-
+                        transporter.updateMentions();
                     } else if(status.getUser().getScreenName().compareTo(user.getScreenName()) == 0){
                         transporter.writeToDb(status, true);
                     }
