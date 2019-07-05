@@ -3,6 +3,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mongodb.*;
 import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -88,16 +91,24 @@ public class Transporter {
 
         DBCursor cursor = tweets.find(inQuery);
         JsonParser jsonParser = new JsonParser();
-        List<Long> statusIDs = new ArrayList<Long>();
+        Twitter twitter = new TwitterFactory().getInstance();
 
         while(cursor.hasNext()) {
             JsonElement statusJSON = jsonParser.parse(cursor.next().toString());
             JsonObject statusObj = statusJSON.getAsJsonObject();
             long id = statusObj.get("tweet_id").getAsLong();
-            statusIDs.add(id);
+            try{
+                Status status = twitter.showStatus(id);
+                
+            } catch (TwitterException e) {
+                System.out.println("Tweet with id " + id + " no longer exists");
+            }
+
         }
 
     }
+
+
     private void setCredentials() {
         try {
             BufferedReader bufferedReader = new BufferedReader(fileReader);

@@ -96,10 +96,7 @@ public class Tracker {
         return isTracking;
     }
 
-    private void calculateStats(List<Long> statusIDs){
-        // Updates stats and tweets collections
-        
-    }
+
 
     public User getUser() {
         return user;
