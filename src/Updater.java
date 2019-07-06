@@ -1,6 +1,7 @@
 import com.google.gson.*;
 import com.mongodb.*;
 import twitter4j.*;
+import java.util.*;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class Updater {
     }
 
     public void updateMentions() {
+        System.out.println("Updating mentions at " + new Date());
         // Does not update last_updated
         BasicDBObject newDocument =
                 new BasicDBObject().append("$inc",
@@ -26,11 +28,13 @@ public class Updater {
     }
 
     public void updateTweetStats() {
+        System.out.println("Updating tweet stats at " + new Date());
         // Search for tweets in DB from this tracker
         BasicDBObject inQuery = new BasicDBObject();
         inQuery.put("tracker_id", trackerId);
 
         List<DBObject> statuses = tweets.find(inQuery).toArray();
+        System.out.println("Found " + statuses.size() + " tweets");
         JsonParser jsonParser = new JsonParser();
         Twitter twitter = new TwitterFactory().getInstance();
 

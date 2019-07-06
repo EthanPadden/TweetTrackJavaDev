@@ -64,20 +64,18 @@ public class Tracker {
             System.out.println("ID: " + trackerId);
             initStatsRecord();
         }
-
-        updater = new Updater(stats, trackerId);
-
-        Thread thread = new Thread(new Runnable()
-        {
-            public void run()
-            {
-
-            }
-        });
-
-// start the thread
-
-        thread.start();
+//
+//        updater = new Updater(stats, tweets, trackerId);
+//
+//        Thread thread = new Thread(new Runnable()
+//        {
+//            public void run()
+//            {
+//                updater.updateTweetStats();
+//            }
+//        });
+//
+//        thread.start();
 
     }
 
@@ -174,12 +172,17 @@ public class Tracker {
 //            Timer timer = new Timer();
 //            timer.scheduleAtFixedRate(statusOutput, 1000, 60000);
             StatusListener listener = new StatusListener() {
+
                 @Override
                 public void onStatus(Status status) {
+                    System.out.println("Status: " + status.getText());
                     if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
                         writeToDb(status, false);
-                        updater.updateMentions();
+                        System.out.println("User was mentioned by " + status.getUser().getScreenName());
+                        System.out.println("Text: " + status.getText());
+//                        updater.updateMentions();
                     } else if(status.getUser().getScreenName().compareTo(user.getScreenName()) == 0){
+                        System.out.println("User tweeted: " + status.getText());
                         writeToDb(status, true);
                     }
                 }
@@ -206,18 +209,24 @@ public class Tracker {
 
             };
 
+
+
             twitterStream.addListener(listener);
-            twitterStream.filter(new FilterQuery("@" + user.getScreenName()));
+            System.out.println("Tracking " + listener);
+
+            twitterStream.filter("@" + user.getScreenName());
+
 
             try{
                 Thread.sleep(400000);
-
+                System.out.println("Thread sleep over");
+//                twitterStream.cleanUp();
+                // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
+//                twitterStream.sample();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            twitterStream.cleanUp();
-            // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
-            twitterStream.sample();
+
         }
 
     }
@@ -225,8 +234,6 @@ public class Tracker {
     public boolean isTracking() {
         return isTracking;
     }
-
-
 
     public User getUser() {
         return user;
