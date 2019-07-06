@@ -25,7 +25,6 @@ public class Tracker {
     private boolean isTracking;
     private static String defMsgFile = "trackermsg.txt";
     private TwitterStream twitterStream;
-    private Transporter transporter;
     private FileReader fileReader;
     private MongoClient mongoClient;
     private DB db;
@@ -37,9 +36,6 @@ public class Tracker {
     private String trackerId;
     private static String CREDS_FILE = "src/mongoCredentials.json";
 
-    public Transporter getTransporter() {
-        return transporter;
-    }
 
     public Tracker(String userName) {
         Account account = new Account(userName);
@@ -49,7 +45,6 @@ public class Tracker {
             System.out.println("Could not set up tracker - user does not exist");
             System.exit(-1);
         } else {
-            transporter = new Transporter(this);
             isTracking = false;
             twitterStream = new TwitterStreamFactory().getInstance();
         }
@@ -166,10 +161,10 @@ public class Tracker {
                 @Override
                 public void onStatus(Status status) {
                     if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
-                        transporter.writeToDb(status, false);
-                        transporter.updateMentions();
+                        writeToDb(status, false);
+                        // Update mentions here
                     } else if(status.getUser().getScreenName().compareTo(user.getScreenName()) == 0){
-                        transporter.writeToDb(status, true);
+                        writeToDb(status, true);
                     }
                 }
 
