@@ -1,14 +1,17 @@
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
+import com.mongodb.DBCollection;
 
 public class Updater {
-    private DB db;
+    private DBCollection stats;
     private String trackerID;
 
-    public Updater(DB db, String trackerID) {
-        this.db = db;
+    public Updater(DBCollection stats, String trackerID) {
+        this.stats = stats;
         this.trackerID = trackerID;
     }
-    //    public void updateMentions() {
+
+//    public void updateMentions() {
 //        // Does not update last_updated
 //        BasicDBObject newDocument =
 //                new BasicDBObject().append("$inc",
