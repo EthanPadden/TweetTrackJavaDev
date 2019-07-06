@@ -73,7 +73,7 @@ public class Transporter {
         return (okInt == 1);
     }
 
-    // HERE
+    // FOR UPDATER:
 
     public void updateMentions() {
         // Does not update last_updated
@@ -147,7 +147,9 @@ public class Transporter {
             }
         }
 
-        public boolean writeToDb (Status status, boolean isFromTrackedAccount){
+
+    public String getTrackerId() {
+        return trackerId;public boolean writeToDb (Status status, boolean isFromTrackedAccount){
             DBObject tweet;
             WriteResult writeResult;
             if (isFromTrackedAccount) {
@@ -176,8 +178,6 @@ public class Transporter {
             int okInt = ok.intValue();
             return (okInt == 1);
         }
-    public String getTrackerId() {
-        return trackerId;
     }
 
 
