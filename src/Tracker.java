@@ -35,6 +35,7 @@ public class Tracker {
     JsonParser jsonParser;
     private String trackerId;
     private static String CREDS_FILE = "src/mongoCredentials.json";
+    private Updater updater;
 
 
     public Tracker(String userName) {
@@ -64,13 +65,12 @@ public class Tracker {
             initStatsRecord();
         }
 
-        // Start updater
+        updater = new Updater(stats, trackerId);
+
         Thread thread = new Thread(new Runnable()
         {
             public void run()
             {
-                // this will be run in a separate thread
-
 
             }
         });
@@ -178,7 +178,7 @@ public class Tracker {
                 public void onStatus(Status status) {
                     if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
                         writeToDb(status, false);
-                        // Update mentions here
+                        updater.updateMentions();
                     } else if(status.getUser().getScreenName().compareTo(user.getScreenName()) == 0){
                         writeToDb(status, true);
                     }

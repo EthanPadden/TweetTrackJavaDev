@@ -15,7 +15,7 @@ public class Updater {
         // Does not update last_updated
         BasicDBObject newDocument =
                 new BasicDBObject().append("$inc",
-                        new BasicDBObject().append("mentions_count", 99));
+                        new BasicDBObject().append("mentions_count", 1));
 
         stats.update(new BasicDBObject().append("tracker_id", trackerId), newDocument);
     }
