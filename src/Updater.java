@@ -1,5 +1,14 @@
+import com.mongodb.DB;
+
 public class Updater {
-//    public void updateMentions() {
+    private DB db;
+    private String trackerID;
+
+    public Updater(DB db, String trackerID) {
+        this.db = db;
+        this.trackerID = trackerID;
+    }
+    //    public void updateMentions() {
 //        // Does not update last_updated
 //        BasicDBObject newDocument =
 //                new BasicDBObject().append("$inc",
