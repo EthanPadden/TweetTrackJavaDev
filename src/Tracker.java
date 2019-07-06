@@ -63,6 +63,22 @@ public class Tracker {
             System.out.println("ID: " + trackerId);
             initStatsRecord();
         }
+
+        // Start updater
+        Thread thread = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                // this will be run in a separate thread
+
+
+            }
+        });
+
+// start the thread
+
+        thread.start();
+
     }
 
     private boolean saveTrackerToDB() {

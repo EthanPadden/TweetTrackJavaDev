@@ -142,19 +142,6 @@ public class Main {
                 tracker.setTracking(true);
                 tracker.trackUserTweets();
 
-                Thread thread = new Thread(new Runnable()
-                {
-                    public void run()
-                    {
-                        // this will be run in a separate thread
-
-
-                    }
-                });
-
-// start the thread
-
-                thread.start();
 
                 while(tracker.isTracking()) {}
 
