@@ -1,7 +1,4 @@
 import com.google.gson.JsonObject;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.WriteResult;
 import twitter4j.*;
 
 import java.io.FileNotFoundException;
@@ -10,6 +7,18 @@ import java.sql.Time;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.mongodb.*;
+
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Tracker {
     private User user;
