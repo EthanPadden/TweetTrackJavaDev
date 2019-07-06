@@ -70,6 +70,32 @@ public class Tracker {
         }
     }
 
+    private boolean saveTrackerToDB() {
+        DBObject doc = new BasicDBObject("start_date", new Date().toString())
+                .append("handle", user.getScreenName());
+        WriteResult w = trackers.insert(doc);
+        trackerId = ((BasicDBObject) doc).get("_id").toString();
+        JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
+        Number ok = result.get("ok").getAsNumber();
+        int okInt = ok.intValue();
+        return (okInt == 1);
+    }
+
+    private boolean initStatsRecord() {
+        DBObject doc = new BasicDBObject("last_updated", new Date().toString())
+                .append("handle", user.getScreenName())
+                .append("tracker_id", trackerId)
+                .append("tweet_count", 0)
+                .append("mentions_count", 0)
+                .append("likes_count", 0)
+                .append("rt_count", 0);
+        WriteResult w = stats.insert(doc);
+        JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
+        Number ok = result.get("ok").getAsNumber();
+        int okInt = ok.intValue();
+        return (okInt == 1);
+    }
+
     public void trackUserTweets() {
         if (user == null) System.out.println("Cannot find user");
         else {

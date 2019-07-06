@@ -47,7 +47,6 @@ public class Transporter {
         }
     }
 
-    // HERE
     private boolean saveTrackerToDB() {
         DBObject doc = new BasicDBObject("start_date", new Date().toString())
                 .append("handle", tracker.getUser().getScreenName());
@@ -73,6 +72,8 @@ public class Transporter {
         int okInt = ok.intValue();
         return (okInt == 1);
     }
+
+    // HERE
 
     public void updateMentions() {
         // Does not update last_updated
