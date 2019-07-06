@@ -4,21 +4,21 @@ import com.mongodb.DBCollection;
 
 public class Updater {
     private DBCollection stats;
-    private String trackerID;
+    private String trackerId;
 
-    public Updater(DBCollection stats, String trackerID) {
+    public Updater(DBCollection stats, String trackerId) {
         this.stats = stats;
-        this.trackerID = trackerID;
+        this.trackerId = trackerId;
     }
 
-//    public void updateMentions() {
-//        // Does not update last_updated
-//        BasicDBObject newDocument =
-//                new BasicDBObject().append("$inc",
-//                        new BasicDBObject().append("mentions_count", 99));
-//
-//        stats.update(new BasicDBObject().append("tracker_id", trackerId), newDocument);
-//    }
+    public void updateMentions() {
+        // Does not update last_updated
+        BasicDBObject newDocument =
+                new BasicDBObject().append("$inc",
+                        new BasicDBObject().append("mentions_count", 99));
+
+        stats.update(new BasicDBObject().append("tracker_id", trackerId), newDocument);
+    }
 //
 //    public void updateTweetStats() {
 //        // TODO: go through and count GET request to endpoints
