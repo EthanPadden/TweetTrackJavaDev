@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-// HERE
-
 public class Transporter {
     private FileReader fileReader;
     private MongoClient mongoClient;
@@ -30,6 +28,7 @@ public class Transporter {
     private String trackerId;
     private static String CREDS_FILE = "src/mongoCredentials.json";
 
+    // HERE
 
     public String getTrackerId() {
         return trackerId;

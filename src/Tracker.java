@@ -26,6 +26,16 @@ public class Tracker {
     private static String defMsgFile = "trackermsg.txt";
     private TwitterStream twitterStream;
     private Transporter transporter;
+    private FileReader fileReader;
+    private MongoClient mongoClient;
+    private DB db;
+    private DBCollection mentions;
+    private DBCollection trackers;
+    private DBCollection tweets;
+    private DBCollection stats;
+    JsonParser jsonParser;
+    private String trackerId;
+    private static String CREDS_FILE = "src/mongoCredentials.json";
 
     public Transporter getTransporter() {
         return transporter;
