@@ -216,6 +216,10 @@ public class Tracker {
         return user;
     }
 
+    public String getTrackerId() {
+        return trackerId;
+    }
+
     public void setTracking(boolean tracking) {
         isTracking = tracking;
     }
