@@ -28,11 +28,7 @@ public class Transporter {
     private String trackerId;
     private static String CREDS_FILE = "src/mongoCredentials.json";
 
-    // HERE
 
-    public String getTrackerId() {
-        return trackerId;
-    }
 
     public Transporter(Tracker tracker) {
         // File that stored credentials
@@ -51,6 +47,7 @@ public class Transporter {
         }
     }
 
+    // HERE
     private boolean saveTrackerToDB() {
         DBObject doc = new BasicDBObject("start_date", new Date().toString())
                 .append("handle", tracker.getUser().getScreenName());
@@ -178,5 +175,9 @@ public class Transporter {
             int okInt = ok.intValue();
             return (okInt == 1);
         }
+    public String getTrackerId() {
+        return trackerId;
+    }
+
 
 }

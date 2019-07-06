@@ -53,6 +53,21 @@ public class Tracker {
             isTracking = false;
             twitterStream = new TwitterStreamFactory().getInstance();
         }
+
+        // From transporter
+        // File that stored credentials
+        try {
+            fileReader = new FileReader(CREDS_FILE);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        jsonParser = new JsonParser();
+        setCredentials();
+        boolean saved = saveTrackerToDB();
+        if (saved) {
+            System.out.println("ID: " + trackerId);
+            initStatsRecord();
+        }
     }
 
     public void trackUserTweets() {
