@@ -59,10 +59,21 @@ public class Updater {
                     BasicDBObject likesDoc = new BasicDBObject();
                     likesDoc.append("$set", new BasicDBObject().append("favourite_count", status.getFavoriteCount()));
 
-
-
                     BasicDBObject searchQuery = new BasicDBObject().append("tweet_id", id);
+                    DBObject currentDBObj = tweets.findOne(searchQuery);
+                    int currentLikes = (int) currentDBObj.get("favourite_count");
+                    int newLikes = status.getFavoriteCount();
+                    int difference = newLikes - currentLikes;
+
+                    BasicDBObject newDocument =
+                            new BasicDBObject().append("$inc",
+                                    new BasicDBObject().append("likes_count", difference));
+
+                    stats.update(new BasicDBObject().append("tracker_id", trackerId), newDocument);
                     tweets.update(searchQuery, likesDoc);
+
+
+
                 } catch (TwitterException e) {
                     System.out.println("Tweet with id " + id + " no longer exists");
                 }

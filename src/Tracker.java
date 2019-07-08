@@ -182,11 +182,12 @@ public class Tracker {
                     if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0){
                         if(status.isRetweet()) {
                             // Update retweet - in tweets and stats
-                            BasicDBObject searchQuery = new BasicDBObject().append("tweet_id", status.getRetweetedStatus().getId());
+                            BasicDBObject searchQuery = new BasicDBObject().append("tweet_id", status.getRetweetedStatus().getId()).append("tracker_id", trackerId);
                             try{
                                 BasicDBObject rtDoc = new BasicDBObject();
                                 rtDoc.append("$inc", new BasicDBObject().append("rt_count", 1));
                                 tweets.update(searchQuery, rtDoc);
+                                stats.update(searchQuery, rtDoc);
                             } catch (MongoException e) {
                                 System.out.println("Retweet is from a tweet prior to tracking");
                                 System.out.println("Retweet stats will still be updated");
@@ -201,6 +202,11 @@ public class Tracker {
 
                     } else if(status.getUser().getScreenName().compareTo(user.getScreenName()) == 0){
                         writeToDb(status, true);
+                        BasicDBObject searchQuery = new BasicDBObject().append("tracker_id", trackerId);
+
+                        BasicDBObject tweetCountStats = new BasicDBObject();
+                        tweetCountStats.append("$inc", new BasicDBObject().append("tweet_count", 1));
+                        stats.update(searchQuery, tweetCountStats);
                         System.out.println("User tweeted: " + status.getText());
                     }
                 }
