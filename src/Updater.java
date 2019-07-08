@@ -56,11 +56,13 @@ public class Updater {
                 long id = (long) statuses.get(i).get("tweet_id");
                 try {
                     Status status = twitter.showStatus(id);
-                    BasicDBObject newDocument = new BasicDBObject();
-                    newDocument.append("$set", new BasicDBObject().append("favourite_count", status.getFavoriteCount()));
-                    newDocument.append("$set", new BasicDBObject().append("rt_count", status.getRetweetCount()));
+                    BasicDBObject likesDoc = new BasicDBObject();
+                    likesDoc.append("$set", new BasicDBObject().append("favourite_count", status.getFavoriteCount()));
+
+
+
                     BasicDBObject searchQuery = new BasicDBObject().append("tweet_id", id);
-                    tweets.update(searchQuery, newDocument);
+                    tweets.update(searchQuery, likesDoc);
                 } catch (TwitterException e) {
                     System.out.println("Tweet with id " + id + " no longer exists");
                 }
@@ -76,9 +78,5 @@ public class Updater {
         }
     }
 
-
-//            JsonElement statusJSON = jsonParser.parse(cursor.next().toString());
-//            JsonObject statusObj = statusJSON.getAsJsonObject();
-//            long id = statusObj.get("tweet_id").getAsLong();
 
 }

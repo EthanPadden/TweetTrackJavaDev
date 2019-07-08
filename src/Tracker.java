@@ -24,7 +24,8 @@ public class Tracker {
     private User user;
     private boolean isTracking;
     private static String defMsgFile = "trackermsg.txt";
-    private TwitterStream twitterStream;
+    private TwitterStream mentionStream;
+    private TwitterStream tweetStream;
     private FileReader fileReader;
     private MongoClient mongoClient;
     private DB db;
@@ -47,7 +48,8 @@ public class Tracker {
             System.exit(-1);
         } else {
             isTracking = false;
-            twitterStream = new TwitterStreamFactory().getInstance();
+            mentionStream = new TwitterStreamFactory().getInstance();
+            tweetStream = new TwitterStreamFactory().getInstance();
         }
 
         // From transporter
@@ -65,17 +67,17 @@ public class Tracker {
             initStatsRecord();
         }
 //
-//        updater = new Updater(stats, tweets, trackerId);
+        updater = new Updater(stats, tweets, trackerId);
 //
-//        Thread thread = new Thread(new Runnable()
-//        {
-//            public void run()
-//            {
-//                updater.updateTweetStats();
-//            }
-//        });
-//
-//        thread.start();
+        Thread thread = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                updater.updateTweetStats();
+            }
+        });
+
+        thread.start();
 
     }
 
@@ -167,54 +169,92 @@ public class Tracker {
     public void trackUserTweets() {
         if (user == null) System.out.println("Cannot find user");
         else {
-            // NOT FILTERED
-//            StatusOutput statusOutput = new StatusOutput();
-//            Timer timer = new Timer();
-//            timer.scheduleAtFixedRate(statusOutput, 1000, 60000);
-            StatusListener listener = new StatusListener() {
-
+//            StatusListener mentionsListener = new StatusListener() {
+//                @Override
+//                public void onStatus(Status status) {
+////                    System.out.println("Status: " + status.getText());
+//                    if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
+//                        writeToDb(status, false);
+////                        System.out.println("User was mentioned by " + status.getUser().getScreenName());
+////                        System.out.println("Text: " + status.getText());
+//                        updater.updateMentions();
+//                    }
+//                }
+//
+//                @Override
+//                public void onException(Exception e) {
+//                    System.out.println("MentionListener Exception:");
+//                    e.printStackTrace();
+//                    isTracking = false;
+//                }
+//                public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+//                }
+//                public void onTrackLimitationNotice(int i) {
+//                }
+//                public void onScrubGeo(long l, long l1) {
+//                }
+//                public void onStallWarning(StallWarning stallWarning) {
+//                }
+//            };
+            StatusListener tweetsListener = new StatusListener() {
                 @Override
                 public void onStatus(Status status) {
                     System.out.println("Status: " + status.getText());
-                    if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
-                        writeToDb(status, false);
-                        System.out.println("User was mentioned by " + status.getUser().getScreenName());
-                        System.out.println("Text: " + status.getText());
-//                        updater.updateMentions();
+                    if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0){
+                        if(status.isRetweet()) {
+                            // Update retweet - in tweets and stats
+                            BasicDBObject searchQuery = new BasicDBObject().append("tweet_id", status.getRetweetedStatus().getId());
+                            try{
+                                BasicDBObject rtDoc = new BasicDBObject();
+                                rtDoc.append("$inc", new BasicDBObject().append("rt_count", 1));
+                                tweets.update(searchQuery, rtDoc);
+
+
+                            } catch (MongoException e) {
+                                System.out.println("Retweet is from a tweet prior to tracking");
+                                System.out.println("Retweet stats will still be updated");
+                            }
+                        } else {
+                            // Update mentions
+                            writeToDb(status, false);
+                            System.out.println("User was mentioned by " + status.getUser().getScreenName());
+                            System.out.println("Text: " + status.getText());
+                            updater.updateMentions();
+                        }
+
                     } else if(status.getUser().getScreenName().compareTo(user.getScreenName()) == 0){
-                        System.out.println("User tweeted: " + status.getText());
                         writeToDb(status, true);
+                        System.out.println("User tweeted: " + status.getText());
                     }
                 }
 
                 @Override
                 public void onException(Exception e) {
-                    System.out.println("StatusListener Exception:");
+                    System.out.println("TweetListener Exception:");
                     e.printStackTrace();
                     isTracking = false;
                 }
-
                 public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
                 }
-
                 public void onTrackLimitationNotice(int i) {
                 }
-
                 public void onScrubGeo(long l, long l1) {
                 }
-
                 public void onStallWarning(StallWarning stallWarning) {
                 }
-
 
             };
 
 
 
-            twitterStream.addListener(listener);
-            System.out.println("Tracking " + listener);
+//            mentionStream.addListener(mentionsListener);
+            tweetStream.addListener(tweetsListener);
+//            System.out.println("Tracking " + mentionsListener);
+            FilterQuery query = new FilterQuery();
+            query.follow(new long[] { user.getId() });
+            tweetStream.filter(query);
 
-            twitterStream.filter("@" + user.getScreenName());
+//            mentionStream.filter("@" + user.getScreenName());
 
 
             try{
