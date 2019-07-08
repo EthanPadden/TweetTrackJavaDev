@@ -35,7 +35,7 @@ public class Tracker {
     private DBCollection stats;
     JsonParser jsonParser;
     private String trackerId;
-    private static String CREDS_FILE = "src/mongoCredentials.json";
+    private static String CREDS_FILE = "src/localMongoCreds.json";
     private Updater updater;
 
 
@@ -60,7 +60,7 @@ public class Tracker {
             ex.printStackTrace();
         }
         jsonParser = new JsonParser();
-        setCredentials();
+        setCredentials(false);
         boolean saved = saveTrackerToDB();
         if (saved) {
             System.out.println("ID: " + trackerId);
@@ -107,7 +107,7 @@ public class Tracker {
         return (okInt == 1);
     }
 
-    private void setCredentials () {
+    private void setCredentials (boolean isServer) {
         try {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
@@ -118,13 +118,19 @@ public class Tracker {
             bufferedReader.close();
             JsonElement creds = jsonParser.parse(fileContent);
             JsonObject credsObj = creds.getAsJsonObject();
-            String userName = credsObj.get("user_name").getAsString();
-            String psw = credsObj.get("psw").getAsString();
+            String clientArgs;
             String host = credsObj.get("host").getAsString();
             String port = credsObj.get("port").getAsString();
             String database = credsObj.get("db").getAsString();
+            if(isServer) {
+                String userName = credsObj.get("user_name").getAsString();
+                String psw = credsObj.get("psw").getAsString();
 
-            String clientArgs = "mongodb://" + userName + ":" + psw + "@" + host + ":" + port + "/" + database;
+                clientArgs = "mongodb://" + userName + ":" + psw + "@" + host + ":" + port + "/" + database;
+
+            } else                 clientArgs = "mongodb://localhost:27017/TweetTrack";
+
+
             mongoClient = new MongoClient(new MongoClientURI(clientArgs));
             db = mongoClient.getDB(database);
             trackers = db.getCollection("trackers");
@@ -169,33 +175,6 @@ public class Tracker {
     public void trackUserTweets() {
         if (user == null) System.out.println("Cannot find user");
         else {
-//            StatusListener mentionsListener = new StatusListener() {
-//                @Override
-//                public void onStatus(Status status) {
-////                    System.out.println("Status: " + status.getText());
-//                    if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
-//                        writeToDb(status, false);
-////                        System.out.println("User was mentioned by " + status.getUser().getScreenName());
-////                        System.out.println("Text: " + status.getText());
-//                        updater.updateMentions();
-//                    }
-//                }
-//
-//                @Override
-//                public void onException(Exception e) {
-//                    System.out.println("MentionListener Exception:");
-//                    e.printStackTrace();
-//                    isTracking = false;
-//                }
-//                public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-//                }
-//                public void onTrackLimitationNotice(int i) {
-//                }
-//                public void onScrubGeo(long l, long l1) {
-//                }
-//                public void onStallWarning(StallWarning stallWarning) {
-//                }
-//            };
             StatusListener tweetsListener = new StatusListener() {
                 @Override
                 public void onStatus(Status status) {
@@ -208,8 +187,6 @@ public class Tracker {
                                 BasicDBObject rtDoc = new BasicDBObject();
                                 rtDoc.append("$inc", new BasicDBObject().append("rt_count", 1));
                                 tweets.update(searchQuery, rtDoc);
-
-
                             } catch (MongoException e) {
                                 System.out.println("Retweet is from a tweet prior to tracking");
                                 System.out.println("Retweet stats will still be updated");
