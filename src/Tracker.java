@@ -184,9 +184,11 @@ public class Tracker {
                             // Update retweet - in tweets and stats
                             BasicDBObject searchQuery = new BasicDBObject().append("tweet_id", status.getRetweetedStatus().getId()).append("tracker_id", trackerId);
                             try{
+                                System.out.println("Retweet " + status.getUser());
                                 BasicDBObject rtDoc = new BasicDBObject();
                                 rtDoc.append("$inc", new BasicDBObject().append("rt_count", 1));
                                 tweets.update(searchQuery, rtDoc);
+                                searchQuery = new BasicDBObject().append("tracker_id", trackerId);
                                 stats.update(searchQuery, rtDoc);
                             } catch (MongoException e) {
                                 System.out.println("Retweet is from a tweet prior to tracking");
@@ -237,7 +239,7 @@ public class Tracker {
             query.follow(new long[] { user.getId() });
             tweetStream.filter(query);
 
-//            mentionStream.filter("@" + user.getScreenName());
+//            tweetStream.filter("@" + user.getScreenName());
 
 
             try{
