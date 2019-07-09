@@ -133,7 +133,7 @@ public class Main {
                 Tracker tracker = new Tracker(args[1]);
                 try {
                     PrintWriter printWriter = new PrintWriter("trackerid.txt");
-                    printWriter.println("ID:" + tracker.getTransporter().getTrackerId());
+                    printWriter.println("ID:" + tracker.getTrackerId());
                     printWriter.flush();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -141,7 +141,10 @@ public class Main {
 
                 tracker.setTracking(true);
                 tracker.trackUserTweets();
+
+
                 while(tracker.isTracking()) {}
+
             } else {
                 System.out.println("Please enter a valid command");
                 System.out.println("Commands must be in the form: command handle");

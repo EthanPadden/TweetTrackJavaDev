@@ -1,25 +1,43 @@
 import com.google.gson.JsonObject;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.WriteResult;
 import twitter4j.*;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.Time;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.mongodb.*;
+
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Tracker {
     private User user;
     private boolean isTracking;
     private static String defMsgFile = "trackermsg.txt";
-    private TwitterStream twitterStream;
-    private Transporter transporter;
+    private TwitterStream mentionStream;
+    private TwitterStream tweetStream;
+    private FileReader fileReader;
+    private MongoClient mongoClient;
+    private DB db;
+    private DBCollection mentions;
+    private DBCollection trackers;
+    private DBCollection tweets;
+    private DBCollection stats;
+    JsonParser jsonParser;
+    private String trackerId;
+    private static String CREDS_FILE = "src/localMongoCreds.json";
+    private Updater updater;
 
-    public Transporter getTransporter() {
-        return transporter;
-    }
 
     public Tracker(String userName) {
         Account account = new Account(userName);
@@ -29,64 +47,211 @@ public class Tracker {
             System.out.println("Could not set up tracker - user does not exist");
             System.exit(-1);
         } else {
-            transporter = new Transporter(this);
             isTracking = false;
-            twitterStream = new TwitterStreamFactory().getInstance();
+            mentionStream = new TwitterStreamFactory().getInstance();
+            tweetStream = new TwitterStreamFactory().getInstance();
+        }
+
+        // From transporter
+        // File that stored credentials
+        try {
+            fileReader = new FileReader(CREDS_FILE);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        jsonParser = new JsonParser();
+        setCredentials(false);
+        boolean saved = saveTrackerToDB();
+        if (saved) {
+            System.out.println("ID: " + trackerId);
+            initStatsRecord();
+        }
+//
+        updater = new Updater(stats, tweets, trackerId);
+//
+        Thread thread = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                updater.updateTweetStats();
+            }
+        });
+
+        thread.start();
+
+    }
+
+    private boolean saveTrackerToDB() {
+        DBObject doc = new BasicDBObject("start_date", new Date().toString())
+                .append("handle", user.getScreenName());
+        WriteResult w = trackers.insert(doc);
+        trackerId = ((BasicDBObject) doc).get("_id").toString();
+        JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
+        Number ok = result.get("ok").getAsNumber();
+        int okInt = ok.intValue();
+        return (okInt == 1);
+    }
+
+    private boolean initStatsRecord() {
+        DBObject doc = new BasicDBObject("last_updated", new Date().toString())
+                .append("handle", user.getScreenName())
+                .append("tracker_id", trackerId)
+                .append("tweet_count", 0)
+                .append("mentions_count", 0)
+                .append("likes_count", 0)
+                .append("rt_count", 0);
+        WriteResult w = stats.insert(doc);
+        JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
+        Number ok = result.get("ok").getAsNumber();
+        int okInt = ok.intValue();
+        return (okInt == 1);
+    }
+
+    private void setCredentials (boolean isServer) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            String fileContent = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                fileContent += line;
+            }
+            bufferedReader.close();
+            JsonElement creds = jsonParser.parse(fileContent);
+            JsonObject credsObj = creds.getAsJsonObject();
+            String clientArgs;
+            String host = credsObj.get("host").getAsString();
+            String port = credsObj.get("port").getAsString();
+            String database = credsObj.get("db").getAsString();
+            if(isServer) {
+                String userName = credsObj.get("user_name").getAsString();
+                String psw = credsObj.get("psw").getAsString();
+
+                clientArgs = "mongodb://" + userName + ":" + psw + "@" + host + ":" + port + "/" + database;
+
+            } else                 clientArgs = "mongodb://localhost:27017/TweetTrack";
+
+
+            mongoClient = new MongoClient(new MongoClientURI(clientArgs));
+            db = mongoClient.getDB(database);
+            trackers = db.getCollection("trackers");
+            mentions = db.getCollection("mentions");
+            tweets = db.getCollection("tweets");
+            stats = db.getCollection("stats");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
+    public boolean writeToDb (Status status, boolean isFromTrackedAccount){
+        DBObject tweet;
+        WriteResult writeResult;
+        if (isFromTrackedAccount) {
+            tweet = new BasicDBObject("handle", user.getScreenName())
+                    .append("tracker_id", trackerId)
+                    .append("tweet_id", status.getId())
+                    .append("created_at", status.getCreatedAt().toString())
+                    .append("text", status.getText())
+                    .append("favourite_count", status.getFavoriteCount())
+                    .append("rt_count", status.getRetweetCount())
+                    .append("is_rt", status.isRetweet());
+            writeResult = tweets.insert(tweet);
+
+        } else {
+            tweet = new BasicDBObject("handle", user.getScreenName())
+                    .append("tracker_id", trackerId)
+                    .append("tweeting_user", status.getUser().getScreenName())
+                    .append("tweet_id", status.getId())
+                    .append("created_at", status.getCreatedAt().toString())
+                    .append("text", status.getText());
+            writeResult = mentions.insert(tweet);
+
+        }
+        JsonObject result = jsonParser.parse(writeResult.toString()).getAsJsonObject();
+        Number ok = result.get("ok").getAsNumber();
+        int okInt = ok.intValue();
+        return (okInt == 1);
+    }
     public void trackUserTweets() {
         if (user == null) System.out.println("Cannot find user");
         else {
-            // NOT FILTERED
-//            StatusOutput statusOutput = new StatusOutput();
-//            Timer timer = new Timer();
-//            timer.scheduleAtFixedRate(statusOutput, 1000, 60000);
-            StatusListener listener = new StatusListener() {
+            StatusListener tweetsListener = new StatusListener() {
                 @Override
                 public void onStatus(Status status) {
-                    if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0 && !status.isRetweet()){
-                        transporter.writeToDb(status, false);
+                    System.out.println("Status: " + status.getText());
+                    if(status.getUser().getScreenName().compareTo(user.getScreenName()) != 0){
+                        if(status.isRetweet()) {
+                            // Update retweet - in tweets and stats
+                            BasicDBObject searchQuery = new BasicDBObject().append("tweet_id", status.getRetweetedStatus().getId()).append("tracker_id", trackerId);
+                            try{
+                                System.out.println("Retweet " + status.getUser());
+                                BasicDBObject rtDoc = new BasicDBObject();
+                                rtDoc.append("$inc", new BasicDBObject().append("rt_count", 1));
+                                tweets.update(searchQuery, rtDoc);
+                                searchQuery = new BasicDBObject().append("tracker_id", trackerId);
+                                stats.update(searchQuery, rtDoc);
+                            } catch (MongoException e) {
+                                System.out.println("Retweet is from a tweet prior to tracking");
+                                System.out.println("Retweet stats will still be updated");
+                            }
+                        } else {
+                            // Update mentions
+                            writeToDb(status, false);
+                            System.out.println("User was mentioned by " + status.getUser().getScreenName());
+                            System.out.println("Text: " + status.getText());
+                            updater.updateMentions();
+                        }
 
                     } else if(status.getUser().getScreenName().compareTo(user.getScreenName()) == 0){
-                        transporter.writeToDb(status, true);
+                        writeToDb(status, true);
+                        BasicDBObject searchQuery = new BasicDBObject().append("tracker_id", trackerId);
+
+                        BasicDBObject tweetCountStats = new BasicDBObject();
+                        tweetCountStats.append("$inc", new BasicDBObject().append("tweet_count", 1));
+                        stats.update(searchQuery, tweetCountStats);
+                        System.out.println("User tweeted: " + status.getText());
                     }
                 }
 
                 @Override
                 public void onException(Exception e) {
-                    System.out.println("StatusListener Exception:");
+                    System.out.println("TweetListener Exception:");
                     e.printStackTrace();
                     isTracking = false;
                 }
-
                 public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
                 }
-
                 public void onTrackLimitationNotice(int i) {
                 }
-
                 public void onScrubGeo(long l, long l1) {
                 }
-
                 public void onStallWarning(StallWarning stallWarning) {
                 }
 
-
             };
 
-            twitterStream.addListener(listener);
-            twitterStream.filter(new FilterQuery("@" + user.getScreenName()));
+
+
+//            mentionStream.addListener(mentionsListener);
+            tweetStream.addListener(tweetsListener);
+//            System.out.println("Tracking " + mentionsListener);
+            FilterQuery query = new FilterQuery();
+            query.follow(new long[] { user.getId() });
+            tweetStream.filter(query);
+
+//            tweetStream.filter("@" + user.getScreenName());
+
 
             try{
                 Thread.sleep(400000);
-
+                System.out.println("Thread sleep over");
+//                twitterStream.cleanUp();
+                // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
+//                twitterStream.sample();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            twitterStream.cleanUp();
-            // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
-            twitterStream.sample();
+
         }
 
     }
@@ -95,9 +260,12 @@ public class Tracker {
         return isTracking;
     }
 
-
     public User getUser() {
         return user;
+    }
+
+    public String getTrackerId() {
+        return trackerId;
     }
 
     public void setTracking(boolean tracking) {
