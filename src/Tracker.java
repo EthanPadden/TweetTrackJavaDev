@@ -35,7 +35,7 @@ public class Tracker {
     private DBCollection stats;
     JsonParser jsonParser;
     private String trackerId;
-    private static String CREDS_FILE = "src/localMongoCreds.json";
+    private static String CREDS_FILE = "src/mongoCredentials.json";
     private Updater updater;
 
 
@@ -60,7 +60,7 @@ public class Tracker {
             ex.printStackTrace();
         }
         jsonParser = new JsonParser();
-        setCredentials(false);
+        setCredentials(true);
         boolean saved = saveTrackerToDB();
         if (saved) {
             System.out.println("ID: " + trackerId);
