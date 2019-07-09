@@ -28,6 +28,7 @@ public class Updater {
     }
 
     public void updateTweetStats() {
+
         System.out.println("Updating tweet stats at " + new Date());
         // Search for tweets in DB from this tracker
         BasicDBObject inQuery = new BasicDBObject();
@@ -37,6 +38,8 @@ public class Updater {
         System.out.println("Found " + statuses.size() + " tweets");
         JsonParser jsonParser = new JsonParser();
         Twitter twitter = new TwitterFactory().getInstance();
+
+
 
         updateBatch(statuses, 0, twitter);
     }

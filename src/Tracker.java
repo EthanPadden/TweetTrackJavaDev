@@ -187,9 +187,17 @@ public class Tracker {
                                 System.out.println("Retweet " + status.getUser());
                                 BasicDBObject rtDoc = new BasicDBObject();
                                 rtDoc.append("$inc", new BasicDBObject().append("rt_count", 1));
-                                tweets.update(searchQuery, rtDoc);
-                                searchQuery = new BasicDBObject().append("tracker_id", trackerId);
-                                stats.update(searchQuery, rtDoc);
+                                WriteResult writeResult = tweets.update(searchQuery, rtDoc);
+                                System.out.println("WRITE RESULT: " + writeResult.toString());
+                                JsonObject result = jsonParser.parse(writeResult.toString()).getAsJsonObject();
+                                Boolean exisingTweetEdited = result.get("updatedExisting").getAsBoolean();
+                                boolean exisingTweetEditedBool = exisingTweetEdited.booleanValue();
+
+                                if(exisingTweetEditedBool) {
+                                    searchQuery = new BasicDBObject().append("tracker_id", trackerId);
+                                    stats.update(searchQuery, rtDoc);
+                                }
+
                             } catch (MongoException e) {
                                 System.out.println("Retweet is from a tweet prior to tracking");
                                 System.out.println("Retweet stats will still be updated");
