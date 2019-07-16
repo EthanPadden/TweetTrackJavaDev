@@ -9,7 +9,7 @@ public class Updater {
     private DBCollection stats;
     private DBCollection tweets;
     private String trackerId;
-    private static final int DELAY = 120000;
+    private static final int DELAY = 900000;
 
     public Updater(DBCollection stats, DBCollection tweets, String trackerId) {
         this.stats = stats;
