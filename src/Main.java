@@ -160,7 +160,7 @@ public class Main {
                     Status link = twitter.showStatus(l);
                     l = Long.parseLong("855156813884514304");
                     Status img = twitter.showStatus(l);
-                    l = Long.parseLong("1149476532441608192");
+                    l = Long.parseLong("1132954967512371205");
                     Status vid = twitter.showStatus(l);
                     System.out.println("Done");
                 } catch (TwitterException e) {

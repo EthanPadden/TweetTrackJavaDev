@@ -155,6 +155,27 @@ public class Tracker {
                     .append("favourite_count", status.getFavoriteCount())
                     .append("rt_count", status.getRetweetCount())
                     .append("is_rt", status.isRetweet());
+
+            BasicDBObject mediaEntitiesObj = new BasicDBObject();
+            MediaEntity[] mediaEntities = status.getMediaEntities();
+
+            if(mediaEntities != null) {
+                int i = 0;
+                for(MediaEntity mediaEntity : mediaEntities) {
+                    if(mediaEntity.getType().compareTo("photo") == 0) {
+                        BasicDBObject mediaEntityObj = new BasicDBObject().append("type", "photo")
+                                .append("url", mediaEntity.getURL());
+                        mediaEntitiesObj.append(Integer.toString(i), mediaEntityObj);
+                    } else if(mediaEntity.getType().compareTo("video") == 0) {
+                        BasicDBObject mediaEntityObj = new BasicDBObject().append("type", "video")
+                                .append("url", mediaEntity.getURL());
+                        mediaEntityObj.append("duration", mediaEntity.getVideoDurationMillis());
+                        mediaEntitiesObj.append(Integer.toString(i), mediaEntityObj);
+                    }
+                        i++;
+                }
+            }
+
             writeResult = tweets.insert(tweet);
 
         } else {
