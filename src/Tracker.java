@@ -83,7 +83,9 @@ public class Tracker {
 
     private boolean saveTrackerToDB() {
         DBObject doc = new BasicDBObject("start_date", new Date().toString())
-                .append("handle", user.getScreenName());
+                .append("handle", user.getScreenName())
+                .append("system", 1) // New timestamps system
+                .append("status", 1); // Tracking
         WriteResult w = trackers.insert(doc);
         trackerId = ((BasicDBObject) doc).get("_id").toString();
         JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
