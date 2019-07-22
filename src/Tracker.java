@@ -144,7 +144,7 @@ public class Tracker {
     }
 
     public boolean writeToDb (Status status, boolean isFromTrackedAccount){
-        DBObject tweet;
+        BasicDBObject tweet;
         WriteResult writeResult;
         if (isFromTrackedAccount) {
             tweet = new BasicDBObject("handle", user.getScreenName())
@@ -179,7 +179,7 @@ public class Tracker {
                         i++;
                 }
             }
-
+            tweet.append("media_entities", mediaEntitiesObj);
             writeResult = tweets.insert(tweet);
 
         } else {
