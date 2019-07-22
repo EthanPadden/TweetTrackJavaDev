@@ -180,6 +180,18 @@ public class Tracker {
                 }
             }
             tweet.append("media_entities", mediaEntitiesObj);
+            URLEntity[] urlEntities = status.getURLEntities();
+            BasicDBObject urlEntitiesObj = new BasicDBObject();
+
+            if(urlEntities != null) {
+                int i = 0;
+                for(URLEntity urlEntity : urlEntities) {
+                    urlEntitiesObj.append(Integer.toString(i), urlEntity.getURL());
+                    i++;
+                }
+            }
+            tweet.append("url_entities", urlEntitiesObj);
+
             writeResult = tweets.insert(tweet);
 
         } else {
