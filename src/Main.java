@@ -156,12 +156,10 @@ public class Main {
                 Twitter twitter = new TwitterFactory().getInstance();
 
                 try {
-                    long l = Long.parseLong("1148532274843045888");
-                    Status link = twitter.showStatus(l);
-                    l = Long.parseLong("855156813884514304");
-                    Status img = twitter.showStatus(l);
-                    l = Long.parseLong("1132954967512371205");
-                    Status vid = twitter.showStatus(l);
+                    long l = Long.parseLong("1152971509599748102");
+                    MediaEntity gif = twitter.showStatus(l).getMediaEntities()[0];
+                    l = Long.parseLong("1152624811086098433");
+                    String vid = twitter.showStatus(l).getText();
                     System.out.println("Done");
                 } catch (TwitterException e) {
                     e.printStackTrace();

@@ -171,6 +171,10 @@ public class Tracker {
                                 .append("url", mediaEntity.getURL());
                         mediaEntityObj.append("duration", mediaEntity.getVideoDurationMillis());
                         mediaEntitiesObj.append(Integer.toString(i), mediaEntityObj);
+                    } else if(mediaEntity.getType().compareTo("animated_gif") == 0) {
+                        BasicDBObject mediaEntityObj = new BasicDBObject().append("type", "animated_gif")
+                                .append("url", mediaEntity.getURL());
+                        mediaEntitiesObj.append(Integer.toString(i), mediaEntityObj);
                     }
                         i++;
                 }
