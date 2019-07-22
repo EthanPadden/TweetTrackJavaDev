@@ -20,4 +20,8 @@ public class EngmtListener {
         this.user = user;
         this.db = db;
     }
+
+    public void listen() {
+        System.out.println("Listening");
+    }
 }

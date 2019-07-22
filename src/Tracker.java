@@ -272,8 +272,16 @@ public class Tracker {
             query.follow(new long[] { user.getId() });
             tweetStream.filter(query);
 
-//            tweetStream.filter("@" + user.getScreenName());
+            EngmtListener engmtListener = new EngmtListener(user, db);
+            Thread thread = new Thread(new Runnable()
+            {
+                public void run()
+                {
+                    engmtListener.listen();
+                }
+            });
 
+            thread.start();
 
             try{
                 Thread.sleep(400000);
