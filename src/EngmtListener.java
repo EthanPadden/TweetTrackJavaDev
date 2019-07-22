@@ -84,7 +84,7 @@ public class EngmtListener {
                 .append("tracker_id", trackerId)
                 .append("tweeting_user", status.getUser().getScreenName())
                 .append("tweet_id", status.getId())
-                .append("created_at", status.getCreatedAt().toString())
+                .append("created_at", status.getCreatedAt().getTime())
                 .append("text", status.getText());
         writeResult = hashtags.insert(tweet);
 

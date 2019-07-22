@@ -150,7 +150,7 @@ public class Tracker {
             tweet = new BasicDBObject("handle", user.getScreenName())
                     .append("tracker_id", trackerId)
                     .append("tweet_id", status.getId())
-                    .append("created_at", status.getCreatedAt().toString())
+                    .append("created_at", status.getCreatedAt().getTime())
                     .append("text", status.getText())
                     .append("favourite_count", status.getFavoriteCount())
                     .append("rt_count", status.getRetweetCount())
@@ -199,7 +199,7 @@ public class Tracker {
                     .append("tracker_id", trackerId)
                     .append("tweeting_user", status.getUser().getScreenName())
                     .append("tweet_id", status.getId())
-                    .append("created_at", status.getCreatedAt().toString())
+                    .append("created_at", status.getCreatedAt().getTime())
                     .append("text", status.getText());
             writeResult = mentions.insert(tweet);
 
