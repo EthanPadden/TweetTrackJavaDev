@@ -272,7 +272,7 @@ public class Tracker {
             query.follow(new long[] { user.getId() });
             tweetStream.filter(query);
 
-            EngmtListener engmtListener = new EngmtListener(user, db);
+            EngmtListener engmtListener = new EngmtListener(user, db, trackerId);
             Thread thread = new Thread(new Runnable()
             {
                 public void run()
