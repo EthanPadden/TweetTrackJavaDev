@@ -156,11 +156,8 @@ public class Main {
                 Twitter twitter = new TwitterFactory().getInstance();
 
                 try {
-                    long l = Long.parseLong("1148532274843045888");
-                    Status link = twitter.showStatus(l);
-                    l = Long.parseLong("855156813884514304");
-                    Status img = twitter.showStatus(l);
-                    l = Long.parseLong("1149476532441608192");
+                    long l = Long.parseLong("1153296493597605888");
+
                     Status vid = twitter.showStatus(l);
                     System.out.println("Done");
                 } catch (TwitterException e) {
@@ -236,7 +233,7 @@ public class Main {
                     JsonObject statusJson = new JsonObject();
                     statusJson.addProperty("id", status.getId());
                     statusJson.addProperty("text", status.getText());
-                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
+                    statusJson.addProperty("created_at", status.getCreatedAt().getTime());
                     statusJson.addProperty("favourite_count", status.getFavoriteCount());
                     statusJson.addProperty("rt_count", status.getRetweetCount());
                     statusJson.addProperty("is_rt", status.isRetweet());
@@ -267,7 +264,7 @@ public class Main {
                     JsonObject statusJson = new JsonObject();
                     statusJson.addProperty("id", status.getId());
                     statusJson.addProperty("text", status.getText());
-                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
+                    statusJson.addProperty("created_at", status.getCreatedAt().getTime());
                     statusJson.addProperty("favourite_count", status.getFavoriteCount());
                     statusJson.addProperty("rt_count", status.getRetweetCount());
                     statusJson.addProperty("is_rt", status.isRetweet());
@@ -295,7 +292,7 @@ public class Main {
                     JsonObject statusJson = new JsonObject();
                     statusJson.addProperty("id", status.getId());
                     statusJson.addProperty("text", status.getText());
-                    statusJson.addProperty("created_at", status.getCreatedAt().toString());
+                    statusJson.addProperty("created_at", status.getCreatedAt().getTime());
                     statusJson.addProperty("favourite_count", status.getFavoriteCount());
                     statusJson.addProperty("rt_count", status.getRetweetCount());
                     statusJson.addProperty("is_rt", status.isRetweet());

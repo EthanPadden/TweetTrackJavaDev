@@ -83,7 +83,9 @@ public class Tracker {
 
     private boolean saveTrackerToDB() {
         DBObject doc = new BasicDBObject("start_date", new Date().toString())
-                .append("handle", user.getScreenName());
+                .append("handle", user.getScreenName())
+                .append("system", 1) // New timestamps system
+                .append("status", 1); // Tracking
         WriteResult w = trackers.insert(doc);
         trackerId = ((BasicDBObject) doc).get("_id").toString();
         JsonObject result = jsonParser.parse(w.toString()).getAsJsonObject();
@@ -144,17 +146,54 @@ public class Tracker {
     }
 
     public boolean writeToDb (Status status, boolean isFromTrackedAccount){
-        DBObject tweet;
+        BasicDBObject tweet;
         WriteResult writeResult;
         if (isFromTrackedAccount) {
             tweet = new BasicDBObject("handle", user.getScreenName())
                     .append("tracker_id", trackerId)
                     .append("tweet_id", status.getId())
-                    .append("created_at", status.getCreatedAt().toString())
+                    .append("created_at", status.getCreatedAt().getTime())
                     .append("text", status.getText())
                     .append("favourite_count", status.getFavoriteCount())
                     .append("rt_count", status.getRetweetCount())
                     .append("is_rt", status.isRetweet());
+
+            BasicDBObject mediaEntitiesObj = new BasicDBObject();
+            MediaEntity[] mediaEntities = status.getMediaEntities();
+
+            if(mediaEntities != null) {
+                int i = 0;
+                for(MediaEntity mediaEntity : mediaEntities) {
+                    if(mediaEntity.getType().compareTo("photo") == 0) {
+                        BasicDBObject mediaEntityObj = new BasicDBObject().append("type", "photo")
+                                .append("url", mediaEntity.getURL());
+                        mediaEntitiesObj.append(Integer.toString(i), mediaEntityObj);
+                    } else if(mediaEntity.getType().compareTo("video") == 0) {
+                        BasicDBObject mediaEntityObj = new BasicDBObject().append("type", "video")
+                                .append("url", mediaEntity.getURL());
+                        mediaEntityObj.append("duration", mediaEntity.getVideoDurationMillis());
+                        mediaEntitiesObj.append(Integer.toString(i), mediaEntityObj);
+                    } else if(mediaEntity.getType().compareTo("animated_gif") == 0) {
+                        BasicDBObject mediaEntityObj = new BasicDBObject().append("type", "animated_gif")
+                                .append("url", mediaEntity.getURL());
+                        mediaEntitiesObj.append(Integer.toString(i), mediaEntityObj);
+                    }
+                        i++;
+                }
+            }
+            tweet.append("media_entities", mediaEntitiesObj);
+            URLEntity[] urlEntities = status.getURLEntities();
+            BasicDBObject urlEntitiesObj = new BasicDBObject();
+
+            if(urlEntities != null) {
+                int i = 0;
+                for(URLEntity urlEntity : urlEntities) {
+                    urlEntitiesObj.append(Integer.toString(i), urlEntity.getURL());
+                    i++;
+                }
+            }
+            tweet.append("url_entities", urlEntitiesObj);
+
             writeResult = tweets.insert(tweet);
 
         } else {
@@ -162,7 +201,7 @@ public class Tracker {
                     .append("tracker_id", trackerId)
                     .append("tweeting_user", status.getUser().getScreenName())
                     .append("tweet_id", status.getId())
-                    .append("created_at", status.getCreatedAt().toString())
+                    .append("created_at", status.getCreatedAt().getTime())
                     .append("text", status.getText());
             writeResult = mentions.insert(tweet);
 
@@ -247,8 +286,16 @@ public class Tracker {
             query.follow(new long[] { user.getId() });
             tweetStream.filter(query);
 
-//            tweetStream.filter("@" + user.getScreenName());
+            EngmtListener engmtListener = new EngmtListener(user, db, trackerId);
+            Thread thread = new Thread(new Runnable()
+            {
+                public void run()
+                {
+                    engmtListener.listen();
+                }
+            });
 
+            thread.start();
 
             try{
                 Thread.sleep(400000);
